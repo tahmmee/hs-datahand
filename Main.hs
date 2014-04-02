@@ -1,39 +1,19 @@
+--{-# FlexibleInstances, FlexibleContexts, UndecidableInstances, OverlappingInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+--{-# LANGUAGE OverloadedStrings #-}
 module Main where
 
 import Data.Maybe
 import Data.Tuple
 import GHC.Enum
+import Data.Flags
+import Data.List
 
---data KeyCode
-data DHKey = Norm
-           | NAS
-           | NASLock
-           | Function
-           -- these are different codes from 'regular' keyboard metakeys
-           | Shift
-           | Ctrl
-           | Alt
-           deriving (Show, Eq, Ord, Bounded)
-
-instance Enum DHKey where
-    fromEnum = fromJust . flip lookup dhkey_map
-    toEnum = fromJust . flip lookup (map swap dhkey_map)
-
-dhkey_map = [
-    (Norm, 0xf0),
-    (NAS, 0xf1),
-    (NASLock, 0xf2),
-    (Function, 0xf3),
-    (Shift, 0xf4),
-    (Ctrl, 0xf5),
-    (Alt, 0xf6)
-    ]
-
-data MetaKey = LeftCtrl
+data MetaKey = LeftControl
              | LeftShift
              | LeftAlt
              | LeftGui
-             | RightCtrl
+             | RightControl
              | RightShift
              | RightAlt
              | RightGui
@@ -43,21 +23,63 @@ instance Enum MetaKey where
     fromEnum = fromJust . flip lookup metakey_map
     toEnum = fromJust . flip lookup (map swap metakey_map)
 
-metakey_map = [
-    (LeftCtrl, 0x01),
-    (LeftShift, 0x02),
-    (LeftAlt, 0x04),
-    (LeftGui, 0x08),
-    (RightCtrl, 0x10),
-    (RightShift, 0x20),
-    (RightAlt, 0x40),
-    (RightGui, 0x80)
+metakey_map = [-- (LeftControl, 0x01)
+              --, (LeftShift, 0x02)
+              --, (LeftAlt, 0x04)
+              --, (LeftGui, 0x08)
+              --, (RightControl, 0x10)
+              --, (RightShift, 0x20)
+              --, (RightAlt, 0x40)
+              --, (RightGui, 0x80)
+              (LeftShift, 0x80)
     ]
 
-data Key = Dummy0
-         | Dummy1
-         | Dummy2
-         | Dummy3
+--newtype KeyFlags = KeyFlags Key deriving (Eq, Flags)
+--instance Flags Key where
+--    noflags = Dummy00
+--    andflags a b = toEnum (fromEnum a | fromEnum b)
+--    butflags a b = toEnum (fromEnum a | fromEnum b)
+--    butflags a b = toEnum (fromEnum a | fromEnum b)
+--test = KeyFlags Norm .+. KeyFlags NAS
+
+--{enum MyFlags, MyFlags
+--  , myFlag1 = C_FLAG1
+--  , myFlag2 = C_FLAG2
+--  , myFlag3 = C_FLAG3
+--  }
+
+data KeyCode = KeyCode [MetaKey] Key
+
+join delim l = concat (intersperse delim l)
+
+instance Show KeyCode where
+    show (KeyCode metas k) = concat [join "+" (map show metas), "-", show k]
+ 
+--instance Enum Key where
+--    --fromEnum = fromJust . flip lookup dhkey_map
+--    --toEnum = fromJust . flip lookup (map swap dhkey_map)
+--    fromEnum Norm = 0xf0
+--    fromEnum NAS = 0xf1
+--    fromEnum NASLock = 0xf2
+--    fromEnum Function = 0xf3
+--    fromEnum Shift = 0xf4
+--    fromEnum Control = 0xf5
+--    fromEnum Alt = 0xf6
+
+dhkey_map = [
+    (Norm, 0xf0),
+    (NAS, 0xf1),
+    (NASLock, 0xf2),
+    (Function, 0xf3),
+    (Shift, 0xf4),
+    (Control, 0xf5),
+    (Alt, 0xf6)
+    ]
+
+data Key = Dummy00
+         | Dummy01
+         | Dummy02
+         | Dummy03
          | A
          | B
          | C
@@ -154,6 +176,31 @@ data Key = Dummy0
          | Pad9
          | Pad0
          | PadPeriod
+         -- (gap here)
+         | Dummy6A | Dummy6B | Dummy6C | Dummy6D | Dummy6E | Dummy6F | Dummy70
+         | Dummy71 | Dummy72 | Dummy73 | Dummy74 | Dummy75 | Dummy76 | Dummy77 | Dummy78
+         | Dummy79 | Dummy7A | Dummy7B | Dummy7C | Dummy7D | Dummy7E | Dummy7F | Dummy80
+         | Dummy81 | Dummy82 | Dummy83 | Dummy84 | Dummy85 | Dummy86 | Dummy87 | Dummy88
+         | Dummy89 | Dummy8A | Dummy8B | Dummy8C | Dummy8D | Dummy8E | Dummy8F | Dummy90
+         | Dummy91 | Dummy92 | Dummy93 | Dummy94 | Dummy95 | Dummy96 | Dummy97 | Dummy98
+         | Dummy99 | Dummy9A | Dummy9B | Dummy9C | Dummy9D | Dummy9E | Dummy9F | DummyA0
+         | DummyA1 | DummyA2 | DummyA3 | DummyA4 | DummyA5 | DummyA6 | DummyA7 | DummyA8
+         | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD | DummyAE | DummyAF | DummyB0
+         | DummyB1 | DummyB2 | DummyB3 | DummyB4 | DummyB5 | DummyB6 | DummyB7 | DummyB8
+         | DummyB9 | DummyBA | DummyBB | DummyBC | DummyBD | DummyBE | DummyBF | DummyC0
+         | DummyC1 | DummyC2 | DummyC3 | DummyC4 | DummyC5 | DummyC6 | DummyC7 | DummyC8
+         | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF | DummyD0
+         | DummyD1 | DummyD2 | DummyD3 | DummyD4 | DummyD5 | DummyD6 | DummyD7 | DummyD8
+         | DummyD9 | DummyDA | DummyDB | DummyDC | DummyDD | DummyDE | DummyDF
+         -- special datahand keycodes follow
+         | Norm
+         | NAS
+         | NASLock
+         | Function
+         -- these are different codes from 'regular' keyboard metakeys
+         | Shift
+         | Control
+         | Alt
     deriving (Show, Eq, Ord, Bounded, Enum)
 
 
@@ -174,27 +221,27 @@ normal_keys = [ H, U, Escape, Delete
           , R
           , Semicolon, BackSlash, F, G
           --, Alt
---          Alt, Backspace, Ctrl, Tab
+--          Alt, Backspace, Control, Tab
 --          NAS, NASLk, Shift, CapsLock
 --          Space, Function, Enter, Norm
      ]
 
 -- TODO: represent this nicely with comment annotations, something like this:
 
--- Synonyms for better-annotated layouts:
+-- Aliases for prettier layouts:
 scol = Semicolon
-col = Dummy0 --TODO Shift + Colon
+col = Dummy00 --TODO Shift + Colon
 com = Comma
 per = Period
 del = Delete
 esc = Escape
 bktk = BackTick
-qt = Quote
+sqt = Quote
 ret = Enter
 caps = CapsLock
 shft = Shift
-lctl = LeftCtrl
-dqt = Dummy0 --TODO: Shift + Quote
+lctl = Control -- XXX LeftControl
+dqt = Dummy00 --TODO: Shift + Quote
 bslh = BackSlash
 fslh = Slash
 nasl = NASLock
@@ -216,7 +263,7 @@ default_qwerty_layout = [
 --                       +----+           +----+           +----+           +----+
                          , U              , I              , O              , P
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   ,bksp,nasl, sp   , H  , J  , dqt  , Y  , K  , col  , N  , L  , T    ,rbrk,scol,bslh
+   ,bksp,nasl, sp   , H  , J  , sqt  , Y  , K  , col  , N  , L  , T    ,rbrk,scol,bslh
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
    , Alt, NAS, fn        , M              , com            , per            ,fslh
 -- +----+----+----+      +----+           +----+           +----+           +----+     
@@ -226,7 +273,7 @@ programmer_dvorak_layout = [
 --      +----+           +----+           +----+           +----+
          scol            , com            , per            , P
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   , del, A  , X    , esc, O  , X    ,bktk, E  , Y    , qt , U  , I    , ret,caps, Tab   
+   , del, A  , X    , esc, O  , X    ,bktk, E  , Y    , dqt, U  , I    , ret,caps, Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
         , X              , X              , X              , X         ,Norm,shft,lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
@@ -234,7 +281,7 @@ programmer_dvorak_layout = [
 --                       +----+           +----+           +----+           +----+
                          , U              , I              , O              , P
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   ,bksp,nasl, sp   , H  , J  , dqt  , Y  , K  , col  , N  , L  , T    ,rbrk,scol,bslh
+   ,bksp,nasl, sp   , H  , J  , sqt  , Y  , K  , col  , N  , L  , T    ,rbrk,scol,bslh
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
    , Alt, NAS, fn        , M              , com            , per            ,fslh
 -- +----+----+----+      +----+           +----+           +----+           +----+     
@@ -304,3 +351,4 @@ main = do
    dump A
    dump PadPeriod
    print normal_keys
+   print $ KeyCode [LeftShift, LeftControl] Quote
