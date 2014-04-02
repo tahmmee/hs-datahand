@@ -176,25 +176,59 @@ data Key = Dummy00
          | Pad9
          | Pad0
          | PadPeriod
-         -- (gap here)
+         | Dummy64 | Dummy65 | Dummy66 | Dummy67 | Dummy68 | Dummy69
          | Dummy6A | Dummy6B | Dummy6C | Dummy6D | Dummy6E | Dummy6F | Dummy70
          | Dummy71 | Dummy72 | Dummy73 | Dummy74 | Dummy75 | Dummy76 | Dummy77 | Dummy78
-         | Dummy79 | Dummy7A | Dummy7B | Dummy7C | Dummy7D | Dummy7E | Dummy7F | Shift
-         | Dummy81 | Dummy82 | Dummy83 | Dummy84 | Dummy85 | Dummy86 | Dummy87 | Dummy88
-         | Dummy89 | Dummy8A | Dummy8B | Dummy8C | Dummy8D | Dummy8E | Dummy8F | Dummy90
-         | Dummy91 | Dummy92 | Dummy93 | Dummy94 | Dummy95 | Dummy96 | Dummy97 | Dummy98
-         | Dummy99 | Dummy9A | Dummy9B | Dummy9C | Dummy9D | Dummy9E | Dummy9F | DummyA0
-         | DummyA1 | DummyA2 | DummyA3 | DummyA4 | DummyA5 | DummyA6 | DummyA7 | DummyA8
-         | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD | DummyAE | DummyAF | DummyB0
-         | DummyB1 | DummyB2
+         | Dummy79 | Dummy7A | Dummy7B | Dummy7C | Dummy7D | Dummy7E | Dummy7F
+         | Shift
+         | Dummy81 | Dummy82 | Dummy83
+         | CapA
+         | CapB
+         | CapC
+         | CapD
+         | CapE
+         | CapF
+         | CapG
+         | CapH
+         | CapI
+         | CapJ
+         | CapK
+         | CapL
+         | CapM
+         | CapN
+         | CapO
+         | CapP
+         | CapQ
+         | CapR
+         | CapS
+         | CapT
+         | CapU
+         | CapV
+         | CapW
+         | CapX
+         | CapY
+         | CapZ
+         | Bang
+         | At
+         | Hash
+         | Dollar
+         | Percent
+         | Caret
+         | Ampersand
+         | Asterisk
+         | LeftParenthesis
+         | RightParenthesis
+         | DummyA8 | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD | DummyAE | DummyAF | DummyB0 | DummyB1 | DummyB2
          | Colon
          | DoubleQuote
          | DummyB5 | DummyB6 | DummyB7 | DummyB8
          | DummyB9 | DummyBA | DummyBB | DummyBC | DummyBD | DummyBE | DummyBF | DummyC0
          | DummyC1 | DummyC2 | DummyC3 | DummyC4 | DummyC5 | DummyC6 | DummyC7 | DummyC8
-         | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF | DummyD0
-         | DummyD1 | DummyD2 | DummyD3 | DummyD4 | DummyD5 | DummyD6 | DummyD7 | DummyD8
-         | DummyD9 | DummyDA | DummyDB | DummyDC | DummyDD | DummyDE | DummyDF
+         | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF
+         | DummyD0 | DummyD1 | DummyD2 | DummyD3 | DummyD4 | DummyD5 | DummyD6 | DummyD7
+         | DummyD8 | DummyD9 | DummyDA | DummyDB | DummyDC | DummyDD | DummyDE | DummyDF
+         | DummyE0 | DummyE1 | DummyE2 | DummyE3 | DummyE4 | DummyE5 | DummyE6 | DummyE7
+         | DummyE8 | DummyE9 | DummyEA | DummyEB | DummyEC | DummyED | DummyEE | DummyEF
          -- special datahand keycodes follow
          | Norm
          | NAS
@@ -207,30 +241,14 @@ data Key = Dummy00
     deriving (Show, Eq, Ord, Bounded, Enum)
 
 
--- maybe change this to DH_SHIFT(key) form
+-- TODO: "maybe change this to DH_SHIFT(key) form"?
 --define DH_SHIFT 0x80
---normal_keys = map fromEnum [ H, U, Escape, Delete
 normal_keys = [ 
-          --  H, U, Escape, Delete
-          --, J, Quote, A, LeftBracket
-          --, M, Comma, Z, X
-          --, Y, I, Q, W
-          --, K, Semicolon, S, B
-          --, N, O, BackTick, E
-          --, L, P, D, T
-          --, Period, Slash, C, V
-          --, RightBracket, P, DoubleQuote, R
-          --, Semicolon, BackSlash, F, G
-          --, Alt, Backspace, Control, Tab
-          --, NAS, NASLock, Shift, CapsLock
-          --, Space, Function, Enter, Norm
-          -- the above was the custom layout in keymaps.h
-          -- below from keymaps-original.h
           H, U, Delete, Q,
           J, Quote, A, LeftBracket,
           M, Comma, Z, X,
           Y, I, Escape, W,
-          K, Colon, S, B, -- actually semicolon
+          K, Colon, S, B,
           N, O, BackTick, E,
           L, PadEnter, D, T,
           Period, Slash, C, V,
@@ -241,11 +259,9 @@ normal_keys = [
           Space, Function, Return, Norm
  ]
 
--- TODO: represent this nicely with comment annotations, something like this:
-
 -- Aliases for prettier layouts:
 scol = Semicolon
-col = toEnum (fromEnum Shift + fromEnum Semicolon)
+col = Colon
 com = Comma
 per = Period
 del = Delete
@@ -254,9 +270,9 @@ bktk = BackTick
 sqt = Quote
 ret = Return
 caps = CapsLock
-shft = Shift
+shft = DHShift
 lctl = Control -- XXX LeftControl
-dqt = toEnum (fromEnum Shift + fromEnum Quote)
+dqt = DoubleQuote
 bslh = BackSlash
 fslh = Slash
 nasl = NASLock
@@ -266,10 +282,8 @@ sp = Space
 bksp = Backspace
 fn = Function
 pent = PadEnter
-at = toEnum (fromEnum Shift + fromEnum Two)
 dash = Minus
 
---sequence_map = [3,15,23,35,2,6,7,14,18,19,22,26,27,34,38,39,50,47,43,10,11,30,31,51,46,42,1,13,21,33,41,45,48,0,4,5,12,16,17,20,24,25,32,36,37,40,44,49,8,9,28,29]
 sequence_map = [33,26,4,0,34,35,5,6,48,49,19,20,36,27,7,1,37,38,8,9,39,28,10,2,40,41,11,12,50,51,21,22,42,29,13,3,43,44,14,15,45,30,25,18,46,31,24,17,32,47,16,23]
 
 default_qwerty_layout = [
@@ -302,75 +316,15 @@ programmer_dvorak_layout = [
 --                       +----+           +----+           +----+           +----+
                          , G              , C              , R              , L
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   ,bksp,nasl, sp   , D  , H  , sqt  , F  , T  , col  , B  , N  ,pent  , at ,dash,bslh
+   ,bksp,nasl, sp   , D  , H  , sqt  , F  , T  , col  , B  , N  ,pent  , At ,dash,bslh
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
    , Alt, NAS, fn        , M              , W              , V              , Z  
 -- +----+----+----+      +----+           +----+           +----+           +----+     
    ]
 
-
---
---const char PROGMEM nas_keys[]=
---        { 
---          // 6 & del !
---          KEY_6, KEY_7 + DH_SHIFT, KEY_DELETE, KEY_1 + DH_SHIFT,
---          // 7 _ 1 ~
---          KEY_7, KEY_MINUS + DH_SHIFT, KEY_1, KEY_TILDE + DH_SHIFT,
---          // + , = x
---          KEY_EQUAL + DH_SHIFT, KEY_COMMA, KEY_EQUAL, KEY_X,
---          // ( * esc @
---          KEY_6 + DH_SHIFT, KEY_8 + DH_SHIFT, KEY_ESC, KEY_2 + DH_SHIFT,
---          // 8 : 3 numlk
---          KEY_8, KEY_SEMICOLON + DH_SHIFT, KEY_2, KEY_B,
---          // ; ( < #
---          KEY_SEMICOLON, KEY_9 + DH_SHIFT, KEY_COMMA + DH_SHIFT, KEY_3 + DH_SHIFT,
---          // 9 ent 3 >
---          KEY_9, KEY_P, KEY_3, KEY_PERIOD + DH_SHIFT,
---          // . ? % -
---          KEY_PERIOD, KEY_SLASH + DH_SHIFT, KEY_5 + DH_SHIFT, KEY_MINUS,
---          // 10off ) / $
---          KEY_RIGHT_BRACE, KEY_0 + DH_SHIFT, KEY_SLASH, KEY_4 + DH_SHIFT,
---          // 0 10kon 4 5
---          KEY_0, KEY_BACKSLASH, KEY_4, KEY_5,
---
---          KEY_DH_ALT, KEY_BACKSPACE, KEY_DH_CTRL, KEY_TAB,
---          KEY_DH_NAS, KEY_DH_NASLK, KEY_DH_SHIFT, KEY_CAPS_LOCK,
---          KEY_SPACE, KEY_DH_FN, KEY_ENTER, KEY_DH_NORM,
---};
---
---const char PROGMEM fn_keys[]=
---        { 
---          // <- uparrow del f2
---          KEY_LEFT, KEY_UP, KEY_DELETE, KEY_F2,
---          // home -> l/r scrllk
---          KEY_HOME, KEY_RIGHT, KEY_A, KEY_SCROLL_LOCK,
---          // downar f7 f1 f3
---          KEY_DOWN, KEY_F7, KEY_F1, KEY_F3,
---          // end f8 esc f4
---          KEY_END, KEY_F8, KEY_ESC, KEY_F4,
---          // arrowon shift mb3 numlk
---          KEY_K, KEY_SEMICOLON, KEY_S, KEY_NUM_LOCK,
---          // ins f10 = f6
---          KEY_INSERT, KEY_F10, KEY_EQUAL, KEY_F6,
---          // print ent mouseon ent
---          KEY_PRINTSCREEN, KEY_P, KEY_D, KEY_ENTER,
---          // f9 pgdn f5 downarr
---          KEY_F9, KEY_PAGE_DOWN, KEY_F5, KEY_DOWN,
---          // f11 pgup arrleft arrup
---          KEY_F11, KEY_PAGE_UP, KEY_LEFT, KEY_UP,
---          //  pause f12 home arrright
---          KEY_PAUSE, KEY_F12, KEY_HOME, KEY_RIGHT,
---
---          KEY_DH_ALT, KEY_BACKSPACE, KEY_DH_CTRL, KEY_TAB,
---          KEY_DH_NAS, KEY_DH_NASLK, KEY_DH_SHIFT, KEY_CAPS_LOCK,
---          KEY_SPACE, KEY_DH_FN, KEY_ENTER, KEY_DH_NORM,
---};
---
 main = do
    let dump key = putStrLn $ (show key) ++ " = " ++ (show $ fromEnum key)
-   --dump Norm
-   --dump A
-   --dump PadPeriod
+
    --print $ KeyCode [LeftShift, LeftControl] Quote --TODO
    --print $ sort default_qwerty_layout
    --print $ sort normal_keys
