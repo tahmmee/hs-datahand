@@ -66,15 +66,15 @@ instance Show KeyCode where
 --    fromEnum Control = 0xf5
 --    fromEnum Alt = 0xf6
 
-dhkey_map = [
-    (Norm, 0xf0),
-    (NAS, 0xf1),
-    (NASLock, 0xf2),
-    (Function, 0xf3),
-    (Shift, 0xf4),
-    (Control, 0xf5),
-    (Alt, 0xf6)
-    ]
+--dhkey_map = [
+--    (Norm, 0xf0),
+--    (NAS, 0xf1),
+--    (NASLock, 0xf2),
+--    (Function, 0xf3),
+--    (Shift, 0xf4),
+--    (Control, 0xf5),
+--    (Alt, 0xf6)
+--    ]
 
 data Key = Dummy00
          | Dummy01
@@ -116,9 +116,9 @@ data Key = Dummy00
          | Eight
          | Nine
          | Zero
-         | Enter
+         | Return
          | Escape
-         | BackSpace
+         | Backspace
          | Tab
          | Space
          | Minus
@@ -179,14 +179,17 @@ data Key = Dummy00
          -- (gap here)
          | Dummy6A | Dummy6B | Dummy6C | Dummy6D | Dummy6E | Dummy6F | Dummy70
          | Dummy71 | Dummy72 | Dummy73 | Dummy74 | Dummy75 | Dummy76 | Dummy77 | Dummy78
-         | Dummy79 | Dummy7A | Dummy7B | Dummy7C | Dummy7D | Dummy7E | Dummy7F | Dummy80
+         | Dummy79 | Dummy7A | Dummy7B | Dummy7C | Dummy7D | Dummy7E | Dummy7F | Shift
          | Dummy81 | Dummy82 | Dummy83 | Dummy84 | Dummy85 | Dummy86 | Dummy87 | Dummy88
          | Dummy89 | Dummy8A | Dummy8B | Dummy8C | Dummy8D | Dummy8E | Dummy8F | Dummy90
          | Dummy91 | Dummy92 | Dummy93 | Dummy94 | Dummy95 | Dummy96 | Dummy97 | Dummy98
          | Dummy99 | Dummy9A | Dummy9B | Dummy9C | Dummy9D | Dummy9E | Dummy9F | DummyA0
          | DummyA1 | DummyA2 | DummyA3 | DummyA4 | DummyA5 | DummyA6 | DummyA7 | DummyA8
          | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD | DummyAE | DummyAF | DummyB0
-         | DummyB1 | DummyB2 | DummyB3 | DummyB4 | DummyB5 | DummyB6 | DummyB7 | DummyB8
+         | DummyB1 | DummyB2
+         | Colon
+         | DoubleQuote
+         | DummyB5 | DummyB6 | DummyB7 | DummyB8
          | DummyB9 | DummyBA | DummyBB | DummyBC | DummyBD | DummyBE | DummyBF | DummyC0
          | DummyC1 | DummyC2 | DummyC3 | DummyC4 | DummyC5 | DummyC6 | DummyC7 | DummyC8
          | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF | DummyD0
@@ -198,7 +201,7 @@ data Key = Dummy00
          | NASLock
          | Function
          -- these are different codes from 'regular' keyboard metakeys
-         | Shift
+         | DHShift
          | Control
          | Alt
     deriving (Show, Eq, Ord, Bounded, Enum)
@@ -207,49 +210,67 @@ data Key = Dummy00
 -- maybe change this to DH_SHIFT(key) form
 --define DH_SHIFT 0x80
 --normal_keys = map fromEnum [ H, U, Escape, Delete
-normal_keys = [ H, U, Escape, Delete
-                           , J, Quote, A, LeftBracket
-          , M, Comma, Z, X
-          , Y, I, Q, W
-          , K, Semicolon, S, B
-          , N, O, BackTick, E
-          , L, P, D, T
-          , Period, Slash, C, V
-          , RightBracket, P
---          --Quote + Shift
-          , Quote
-          , R
-          , Semicolon, BackSlash, F, G
-          --, Alt
---          Alt, Backspace, Control, Tab
---          NAS, NASLk, Shift, CapsLock
---          Space, Function, Enter, Norm
-     ]
+normal_keys = [ 
+          --  H, U, Escape, Delete
+          --, J, Quote, A, LeftBracket
+          --, M, Comma, Z, X
+          --, Y, I, Q, W
+          --, K, Semicolon, S, B
+          --, N, O, BackTick, E
+          --, L, P, D, T
+          --, Period, Slash, C, V
+          --, RightBracket, P, DoubleQuote, R
+          --, Semicolon, BackSlash, F, G
+          --, Alt, Backspace, Control, Tab
+          --, NAS, NASLock, Shift, CapsLock
+          --, Space, Function, Enter, Norm
+          -- the above was the custom layout in keymaps.h
+          -- below from keymaps-original.h
+          H, U, Delete, Q,
+          J, Quote, A, LeftBracket,
+          M, Comma, Z, X,
+          Y, I, Escape, W,
+          K, Colon, S, B, -- actually semicolon
+          N, O, BackTick, E,
+          L, PadEnter, D, T,
+          Period, Slash, C, V,
+          RightBracket, P, DoubleQuote, R,
+          Semicolon, BackSlash, F, G,
+          Alt, Backspace, Control, Tab,
+          NAS, NASLock, Shift, CapsLock,
+          Space, Function, Return, Norm
+ ]
 
 -- TODO: represent this nicely with comment annotations, something like this:
 
 -- Aliases for prettier layouts:
 scol = Semicolon
-col = Dummy00 --TODO Shift + Colon
+col = toEnum (fromEnum Shift + fromEnum Semicolon)
 com = Comma
 per = Period
 del = Delete
 esc = Escape
 bktk = BackTick
 sqt = Quote
-ret = Enter
+ret = Return
 caps = CapsLock
 shft = Shift
 lctl = Control -- XXX LeftControl
-dqt = Dummy00 --TODO: Shift + Quote
+dqt = toEnum (fromEnum Shift + fromEnum Quote)
 bslh = BackSlash
 fslh = Slash
 nasl = NASLock
 lbrk = LeftBracket
 rbrk = RightBracket
 sp = Space
-bksp = BackSpace
+bksp = Backspace
 fn = Function
+pent = PadEnter
+at = toEnum (fromEnum Shift + fromEnum Two)
+dash = Minus
+
+--sequence_map = [3,15,23,35,2,6,7,14,18,19,22,26,27,34,38,39,50,47,43,10,11,30,31,51,46,42,1,13,21,33,41,45,48,0,4,5,12,16,17,20,24,25,32,36,37,40,44,49,8,9,28,29]
+sequence_map = [33,26,4,0,34,35,5,6,48,49,19,20,36,27,7,1,37,38,8,9,39,28,10,2,40,41,11,12,50,51,21,22,42,29,13,3,43,44,14,15,45,30,25,18,46,31,24,17,32,47,16,23]
 
 default_qwerty_layout = [
 --      +----+           +----+           +----+           +----+
@@ -263,7 +284,7 @@ default_qwerty_layout = [
 --                       +----+           +----+           +----+           +----+
                          , U              , I              , O              , P
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   ,bksp,nasl, sp   , H  , J  , sqt  , Y  , K  , col  , N  , L  , T    ,rbrk,scol,bslh
+   ,bksp,nasl, sp   , H  , J  , sqt  , Y  , K  , col  , N  , L  ,pent  ,rbrk,scol,bslh
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
    , Alt, NAS, fn        , M              , com            , per            ,fslh
 -- +----+----+----+      +----+           +----+           +----+           +----+     
@@ -273,17 +294,17 @@ programmer_dvorak_layout = [
 --      +----+           +----+           +----+           +----+
          scol            , com            , per            , P
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   , del, A  , X    , esc, O  , X    ,bktk, E  , Y    , dqt, U  , I    , ret,caps, Tab   
+   , del, A  ,fslh  , esc, O  , X    ,bktk, E  , Y    , dqt, U  , I    , ret,caps, Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-        , X              , X              , X              , X         ,Norm,shft,lctl
+        , sqt            , Q              , J              , K         ,Norm,shft,lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
-                         , U              , I              , O              , P
+                         , G              , C              , R              , L
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   ,bksp,nasl, sp   , H  , J  , sqt  , Y  , K  , col  , N  , L  , T    ,rbrk,scol,bslh
+   ,bksp,nasl, sp   , D  , H  , sqt  , F  , T  , col  , B  , N  ,pent  , at ,dash,bslh
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   , Alt, NAS, fn        , M              , com            , per            ,fslh
+   , Alt, NAS, fn        , M              , W              , V              , Z  
 -- +----+----+----+      +----+           +----+           +----+           +----+     
    ]
 
@@ -347,8 +368,15 @@ programmer_dvorak_layout = [
 --
 main = do
    let dump key = putStrLn $ (show key) ++ " = " ++ (show $ fromEnum key)
-   dump Norm
-   dump A
-   dump PadPeriod
-   print normal_keys
-   print $ KeyCode [LeftShift, LeftControl] Quote
+   --dump Norm
+   --dump A
+   --dump PadPeriod
+   --print $ KeyCode [LeftShift, LeftControl] Quote --TODO
+   --print $ sort default_qwerty_layout
+   --print $ sort normal_keys
+
+   --print $ map (fromJust . (flip elemIndex $ default_qwerty_layout)) normal_keys -- compute the sequence map
+   --print $ normal_keys
+   --print $ map (default_qwerty_layout !!) sequence_map
+
+   print $ map (fromEnum . (!!) programmer_dvorak_layout) sequence_map
