@@ -1,8 +1,13 @@
 --{-# FlexibleInstances, FlexibleContexts, UndecidableInstances, OverlappingInstances #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+--{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 --{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE DeriveFunctor, DeriveTraversable, DeriveFoldable #-}
 module Main where
 
+import Control.Applicative
+import Data.Traversable
+import Data.Foldable hiding (concat)
 import Data.Maybe
 import Data.Tuple
 import GHC.Enum
@@ -36,7 +41,7 @@ metakey_map = [-- (LeftControl, 0x01)
 
 --newtype KeyFlags = KeyFlags Key deriving (Eq, Flags)
 --instance Flags Key where
---    noflags = Dummy00
+--    noflags = Null
 --    andflags a b = toEnum (fromEnum a | fromEnum b)
 --    butflags a b = toEnum (fromEnum a | fromEnum b)
 --    butflags a b = toEnum (fromEnum a | fromEnum b)
@@ -76,7 +81,7 @@ instance Show KeyCode where
 --    (Alt, 0xf6)
 --    ]
 
-data Key = Dummy00
+data Key = Null
          | Dummy01
          | Dummy02
          | Dummy03
@@ -126,7 +131,7 @@ data Key = Dummy00
          | LeftBracket
          | RightBracket
          | BackSlash
-         | Number
+         | Number -- XXX is this also shift+3?
          | Semicolon
          | Quote
          | BackTick
@@ -180,7 +185,7 @@ data Key = Dummy00
          | Dummy6A | Dummy6B | Dummy6C | Dummy6D | Dummy6E | Dummy6F | Dummy70
          | Dummy71 | Dummy72 | Dummy73 | Dummy74 | Dummy75 | Dummy76 | Dummy77 | Dummy78
          | Dummy79 | Dummy7A | Dummy7B | Dummy7C | Dummy7D | Dummy7E | Dummy7F
-         | Shift
+         | RegularShift
          | Dummy81 | Dummy82 | Dummy83
          | CapA
          | CapB
@@ -218,7 +223,11 @@ data Key = Dummy00
          | Asterisk
          | LeftParenthesis
          | RightParenthesis
-         | DummyA8 | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD | DummyAE | DummyAF | DummyB0 | DummyB1 | DummyB2
+         | DummyA8 | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD | DummyAE
+         | LeftCurlyBracket
+         | RightCurlyBracket
+         | Pipe
+         | DummyB2 -- what is shift+"number"?
          | Colon
          | DoubleQuote
          | DummyB5 | DummyB6 | DummyB7 | DummyB8
@@ -235,14 +244,13 @@ data Key = Dummy00
          | NASLock
          | Function
          -- these are different codes from 'regular' keyboard metakeys
-         | DHShift
+         | Shift
          | Control
          | Alt
     deriving (Show, Eq, Ord, Bounded, Enum)
 
+-- TODO: organize each into separate .hs, create converter for .xml LGS files
 
--- TODO: "maybe change this to DH_SHIFT(key) form"?
---define DH_SHIFT 0x80
 normal_keys = [ 
           H, U, Delete, Q,
           J, Quote, A, LeftBracket,
@@ -270,7 +278,7 @@ bktk = BackTick
 sqt = Quote
 ret = Return
 caps = CapsLock
-shft = DHShift
+shft = Shift
 lctl = Control -- XXX LeftControl
 dqt = DoubleQuote
 bslh = BackSlash
@@ -285,6 +293,30 @@ pent = PadEnter
 dash = Minus
 
 sequence_map = [33,26,4,0,34,35,5,6,48,49,19,20,36,27,7,1,37,38,8,9,39,28,10,2,40,41,11,12,50,51,21,22,42,29,13,3,43,44,14,15,45,30,25,18,46,31,24,17,32,47,16,23]
+
+data Layer t = EmptyLayer | Layer
+--      +----+           +----+           +----+           +----+
+         t                 t                t                t  
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     t    t    t      t    t    t      t    t    t      t    t    t      t    t    t     
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+          t                t                t                t           t    t    t  
+--      +----+           +----+           +----+           +----+      +----+----+----+
+
+--                       +----+           +----+           +----+           +----+
+                           t                t                t                t  
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     t    t    t      t    t    t      t    t    t      t    t    t      t    t    t  
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     t    t    t           t                t                t                t  
+-- +----+----+----+      +----+           +----+           +----+           +----+     
+ deriving (Show, Eq, Functor, Traversable, Foldable)
+
+data Layout = Layout { normal :: Layer Key
+                     , nas :: Layer Key
+                     , function :: Layer Key
+                     , tenk :: Layer Key
+    } deriving (Show, Eq)
 
 default_qwerty_layout = [
 --      +----+           +----+           +----+           +----+
@@ -304,23 +336,86 @@ default_qwerty_layout = [
 -- +----+----+----+      +----+           +----+           +----+           +----+     
    ]
 
-programmer_dvorak_layout = [
---      +----+           +----+           +----+           +----+
-         scol            , com            , per            , P
--- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   , del, A  ,fslh  , esc, O  , X    ,bktk, E  , Y    , dqt, U  , I    , ret,caps, Tab   
--- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-        , sqt            , Q              , J              , K         ,Norm,shft,lctl
---      +----+           +----+           +----+           +----+      +----+----+----+
+my_prog_dvorak = Layout {
+    normal = Layer
+--       +----+           +----+           +----+           +----+
+          scol              com              per              P
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      del  A   fslh    esc  O    X     bktk  E    Y      dqt  U    I      ret caps  Tab   
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+           sqt              Q                J                K          Norm shft lctl
+--       +----+           +----+           +----+           +----+      +----+----+----+
 
---                       +----+           +----+           +----+           +----+
-                         , G              , C              , R              , L
--- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   ,bksp,nasl, sp   , D  , H  , sqt  , F  , T  , col  , B  , N  ,pent  , At ,dash,bslh
--- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-   , Alt, NAS, fn        , M              , W              , V              , Z  
--- +----+----+----+      +----+           +----+           +----+           +----+     
-   ]
+--                        +----+           +----+           +----+           +----+
+                            G                C                R                L
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     bksp nasl  sp     D    H    sqt    F    T    col    B    N   pent    At  dash bslh
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      Alt  NAS  fn          M                W                V                Z  
+--  +----+----+----+      +----+           +----+           +----+           +----+     
+  , nas = Layer
+--       +----+           +----+           +----+           +----+
+          scol              com              per              P
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      del  A   fslh    esc  O    X     bktk  E    Y      dqt  U    I      ret caps  Tab   
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+           sqt              Q                J                K          Norm shft lctl
+--       +----+           +----+           +----+           +----+      +----+----+----+
+
+--                        +----+           +----+           +----+           +----+
+                            G                C                R                L
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     bksp nasl  sp     D    H    sqt    F    T    col    B    N   pent    At  dash bslh
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      Alt  NAS  fn          M                W                V                Z  
+--  +----+----+----+      +----+           +----+           +----+           +----+     
+  , function = Layer
+--       +----+           +----+           +----+           +----+
+          scol              com              per              P
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      del  A   fslh    esc  O    X     bktk  E    Y      dqt  U    I      ret caps  Tab   
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+           sqt              Q                J                K          Norm shft lctl
+--       +----+           +----+           +----+           +----+      +----+----+----+
+
+--                        +----+           +----+           +----+           +----+
+                            G                C                R                L
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     bksp nasl  sp     D    H    sqt    F    T    col    B    N   pent    At  dash bslh
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      Alt  NAS  fn          M                W                V                Z  
+--  +----+----+----+      +----+           +----+           +----+           +----+     
+  , tenk = EmptyLayer
+    }
+
+thr = Three
+svn = Seven
+eigt = Eight
+amp = Ampersand
+perc = Percent
+dol = Dollar
+numl = NumLock
+lcb = LeftCurlyBracket
+rcb = RightCurlyBracket
+lp = LeftParenthesis
+rp = RightParenthesis
+--programmer_dvorak_layout_nas = [
+----      +----+           +----+           +----+           +----+
+--         perc            , svn            ,Five            , thr
+---- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+--   , del, amp, dol  , esc,lbkt,numl  , X  ,lcb , X    , X  ,rcb , lp   , ret,caps, Tab   
+---- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+--        , X            , X              , X              , X         ,Norm,shft,lctl
+----      +----+           +----+           +----+           +----+      +----+----+----+
+--
+----                       +----+           +----+           +----+           +----+
+--                         , 
+---- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+--   ,bksp,nasl, sp   ,
+---- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+--   , Alt, NAS, fn        ,
+---- +----+----+----+      +----+           +----+           +----+           +----+     
+--   ]
 
 main = do
    let dump key = putStrLn $ (show key) ++ " = " ++ (show $ fromEnum key)
@@ -332,5 +427,14 @@ main = do
    --print $ map (fromJust . (flip elemIndex $ default_qwerty_layout)) normal_keys -- compute the sequence map
    --print $ normal_keys
    --print $ map (default_qwerty_layout !!) sequence_map
+   --
+   -- from when i was using lists rather than traversable functors
+   --let dumpRawMap Layout{normal = Layer normal} = print $ map (fromEnum . (!!) normal) sequence_map
+   --let dumpRawMap Layout{..} = print $ map (fromEnum . (!!) normal) sequence_map
 
-   print $ map (fromEnum . (!!) programmer_dvorak_layout) sequence_map
+   print my_prog_dvorak
+
+   let dumpRawMap Layout{..} = print $ toList normal 
+   let fromEnumLayers Layout{..} = fmapDefault (fromEnum :: Key -> Int) normal
+   dumpRawMap my_prog_dvorak
+   print $ fromEnumLayers my_prog_dvorak
