@@ -294,9 +294,9 @@ dash = Minus
 
 sequence_map = [33,26,4,0,34,35,5,6,48,49,19,20,36,27,7,1,37,38,8,9,39,28,10,2,40,41,11,12,50,51,21,22,42,29,13,3,43,44,14,15,45,30,25,18,46,31,24,17,32,47,16,23]
 
-data Layer t = EmptyLayer | Layer
+data Layer t = EmptyLayer | Layer -- TODO should EmptyLayer be all nulls?
 --      +----+           +----+           +----+           +----+
-         t                 t                t                t  
+          t                t                t                t  
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      t    t    t      t    t    t      t    t    t      t    t    t      t    t    t     
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
@@ -311,6 +311,49 @@ data Layer t = EmptyLayer | Layer
      t    t    t           t                t                t                t  
 -- +----+----+----+      +----+           +----+           +----+           +----+     
  deriving (Show, Eq, Functor, Traversable, Foldable)
+
+
+-- XXX TODO RawLayer and use of it to convert to raw mapping is a WIP.
+-- TODO need to actually translate the ints to positions in the data constructor
+data RawLayer t = EmptyRawLayer | RawLayer t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+
+-- TODO this is almost certainly not the best way to represent+effect this mapping
+toRaw EmptyLayer = EmptyRawLayer
+toRaw (Layer
+--      +----+           +----+           +----+           +----+
+          a                b                c                d
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     e    f    g     h     i    j      k    l    m      n    o    p      q    r    s
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+          t                u                v                w           x    y    z
+--      +----+           +----+           +----+           +----+      +----+----+----+
+
+--                       +----+           +----+           +----+           +----+
+                           aa               bb               cc               dd
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     ee   ff   gg     hh   ii   jj     kk   ll   mm     nn   oo   pp     qq   rr   ss
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     tt   uu   vv          ww               xx               yy               zz
+-- +----+----+----+      +----+           +----+           +----+           +----+     
+    ) = (RawLayer
+--      +----+           +----+           +----+           +----+
+          a                b                c                d
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     e    f    g     h     i    j      k    l    m      n    o    p      q    r    s
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+          t                u                v                w           x    y    z
+--      +----+           +----+           +----+           +----+      +----+----+----+
+
+--                       +----+           +----+           +----+           +----+
+                           aa               bb               cc               dd
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     ee   ff   gg     hh   ii   jj     kk   ll   mm     nn   oo   pp     qq   rr   ss
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     tt   uu   vv          ww               xx               yy               zz
+-- +----+----+----+      +----+           +----+           +----+           +----+     
+    )
+
+
 
 data Layout = Layout { normal :: Layer Key
                      , nas :: Layer Key
@@ -369,22 +412,7 @@ my_prog_dvorak = Layout {
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
       Alt  NAS  fn          M                W                V                Z  
 --  +----+----+----+      +----+           +----+           +----+           +----+     
-  , function = Layer
---       +----+           +----+           +----+           +----+
-          scol              com              per              P
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-      del  A   fslh    esc  O    X     bktk  E    Y      dqt  U    I      ret caps  Tab   
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-           sqt              Q                J                K          Norm shft lctl
---       +----+           +----+           +----+           +----+      +----+----+----+
-
---                        +----+           +----+           +----+           +----+
-                            G                C                R                L
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     bksp nasl  sp     D    H    sqt    F    T    col    B    N   pent    At  dash bslh
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-      Alt  NAS  fn          M                W                V                Z  
---  +----+----+----+      +----+           +----+           +----+           +----+     
+  , function = EmptyLayer
   , tenk = EmptyLayer
     }
 
@@ -437,9 +465,12 @@ main = do
     let fromEnumLayers Layout{..} = fmapDefault (fromEnum :: Key -> Int) normal
     print $ fromEnumLayers my_prog_dvorak
 
+    let layerToRawMap EmptyLayer = []
+        layerToRawMap l = map fromEnum $ map (toList l !!) sequence_map
+
     let dumpRawHeader Layout{..} = putStrLn $ join "\n" [
-            "static char PROGMEM normal_keys [] = {" ++ join ", " (map (show . fromEnum) $ toList normal) ++ "};",
-            "static char PROGMEM    nas_keys [] = {" ++ join ", " (map (show . fromEnum) $ toList normal) ++ "};",
-            "static char PROGMEM     fn_keys [] = {" ++ join ", " (map (show . fromEnum) $ toList normal) ++ "};"
+            "static char PROGMEM normal_keys [] = {" ++ join ", " (map show $ layerToRawMap normal  ) ++ "};",
+            "static char PROGMEM    nas_keys [] = {" ++ join ", " (map show $ layerToRawMap nas     ) ++ "};",
+            "static char PROGMEM     fn_keys [] = {" ++ join ", " (map show $ layerToRawMap function) ++ "};"
             ]
     dumpRawHeader my_prog_dvorak
