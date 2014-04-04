@@ -315,7 +315,7 @@ data Layer t = EmptyLayer | Layer -- TODO should EmptyLayer be all nulls?
 
 -- XXX TODO RawLayer and use of it to convert to raw mapping is a WIP.
 -- TODO need to actually translate the ints to positions in the data constructor
-data RawLayer t = EmptyRawLayer | RawLayer t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t 
+data RawLayer t = EmptyRawLayer | RawLayer t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t deriving (Show, Eq, Functor, Traversable, Foldable)
 
 -- TODO this is almost certainly not the best way to represent+effect this mapping
 toRaw EmptyLayer = EmptyRawLayer
@@ -337,20 +337,21 @@ toRaw (Layer
 -- +----+----+----+      +----+           +----+           +----+           +----+     
     ) = (RawLayer
 --      +----+           +----+           +----+           +----+
-          a                b                c                d
+          hh               aa               e                a 
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     e    f    g     h     i    j      k    l    m      n    o    p      q    r    s
+     ii   jj   f      g    ww   xx     t    u    kk     bb   h    b      ll   mm   i 
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-          t                u                v                w           x    y    z
+          j                nn               cc               k           c    oo   pp
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
-                           aa               bb               cc               dd
+                           l                m                yy               zz
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ee   ff   gg     hh   ii   jj     kk   ll   mm     nn   oo   pp     qq   rr   ss
+     v    w    qq     dd   n    d      rr   ss   o      p    tt   ee     z    s    uu
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     tt   uu   vv          ww               xx               yy               zz
+     ff   y    r           gg               vv               q                x 
 -- +----+----+----+      +----+           +----+           +----+           +----+     
+
     )
 
 
@@ -379,6 +380,17 @@ default_qwerty_layout = [
 -- +----+----+----+      +----+           +----+           +----+           +----+     
    ]
 
+thr = Three
+svn = Seven
+eigt = Eight
+amp = Ampersand
+perc = Percent
+dol = Dollar
+numl = NumLock
+lcb = LeftCurlyBracket
+rcb = RightCurlyBracket
+lp = LeftParenthesis
+rp = RightParenthesis
 my_prog_dvorak = Layout {
     normal = Layer
 --       +----+           +----+           +----+           +----+
@@ -396,54 +408,28 @@ my_prog_dvorak = Layout {
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
       Alt  NAS  fn          M                W                V                Z  
 --  +----+----+----+      +----+           +----+           +----+           +----+     
-  , nas = Layer
---       +----+           +----+           +----+           +----+
-          scol              com              per              P
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-      del  A   fslh    esc  O    X     bktk  E    Y      dqt  U    I      ret caps  Tab   
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-           sqt              Q                J                K          Norm shft lctl
---       +----+           +----+           +----+           +----+      +----+----+----+
 
---                        +----+           +----+           +----+           +----+
-                            G                C                R                L
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     bksp nasl  sp     D    H    sqt    F    T    col    B    N   pent    At  dash bslh
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-      Alt  NAS  fn          M                W                V                Z  
---  +----+----+----+      +----+           +----+           +----+           +----+     
+  , nas = Layer
+--      +----+           +----+           +----+           +----+
+         perc              svn             Five              thr
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     del  amp  dol    esc lbrk numl   Null lcb  Null   Null rcb   lp     ret caps  Tab   
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+         Null             Null             Null             Null        Norm shft lctl
+--      +----+           +----+           +----+           +----+      +----+----+----+
+
+--                       +----+           +----+           +----+           +----+
+                          Null             Null             Null             Null
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+    bksp nasl  sp    Null Null Null   Null Null Null   Null Null Null   Null Null Null
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     Alt  NAS  fn         Null             Null             Null             Null
+-- +----+----+----+      +----+           +----+           +----+           +----+     
   , function = EmptyLayer
   , tenk = EmptyLayer
     }
 
-thr = Three
-svn = Seven
-eigt = Eight
-amp = Ampersand
-perc = Percent
-dol = Dollar
-numl = NumLock
-lcb = LeftCurlyBracket
-rcb = RightCurlyBracket
-lp = LeftParenthesis
-rp = RightParenthesis
---programmer_dvorak_layout_nas = [
-----      +----+           +----+           +----+           +----+
---         perc            , svn            ,Five            , thr
----- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
---   , del, amp, dol  , esc,lbkt,numl  , X  ,lcb , X    , X  ,rcb , lp   , ret,caps, Tab   
----- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
---        , X            , X              , X              , X         ,Norm,shft,lctl
-----      +----+           +----+           +----+           +----+      +----+----+----+
---
-----                       +----+           +----+           +----+           +----+
---                         , 
----- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
---   ,bksp,nasl, sp   ,
----- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
---   , Alt, NAS, fn        ,
----- +----+----+----+      +----+           +----+           +----+           +----+     
---   ]
+-- TODO: dvorak in cyrillic
 
 main = do
     let dump key = putStrLn $ (show key) ++ " = " ++ (show $ fromEnum key)
@@ -474,3 +460,14 @@ main = do
             "static char PROGMEM     fn_keys [] = {" ++ join ", " (map show $ layerToRawMap function) ++ "};"
             ]
     dumpRawHeader my_prog_dvorak
+
+    print $ map ((!!) [
+          "a ",              "b ",              "c ",              "d",
+     "e ",  "f ",  "g ",   "h ",   "i ",  "j ",    "k ",  "l ",  "m ",    "n ",  "o ",  "p ",    "q ",  "r ",  "s",
+          "t ",              "u ",              "v ",              "w ",         "x ",  "y ",  "z",
+                           "aa",              "bb",              "cc",              "dd",
+     "ee",  "ff",  "gg",    "hh",  "ii",  "jj",    "kk",  "ll",  "mm",    "nn",  "oo",  "pp",    "qq",  "rr",  "ss",
+     "tt",  "uu",  "vv",         "ww",              "xx",              "yy",              "zz"
+                          ]) sequence_map
+    print $ layerToRawMap (normal my_prog_dvorak)
+    print $ map fromEnum (toList (toRaw $ normal my_prog_dvorak))
