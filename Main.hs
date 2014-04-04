@@ -1,6 +1,3 @@
---{-# FlexibleInstances, FlexibleContexts, UndecidableInstances, OverlappingInstances #-}
---{-# LANGUAGE GeneralizedNewtypeDeriving #-}
---{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE DeriveFunctor, DeriveTraversable, DeriveFoldable #-}
 module Main where
@@ -8,78 +5,10 @@ module Main where
 import Control.Applicative
 import Data.Traversable
 import Data.Foldable hiding (concat)
-import Data.Maybe
-import Data.Tuple
 import GHC.Enum
-import Data.Flags
 import Data.List
 
-data MetaKey = LeftControl
-             | LeftShift
-             | LeftAlt
-             | LeftGui
-             | RightControl
-             | RightShift
-             | RightAlt
-             | RightGui
-             deriving (Show, Eq, Ord, Bounded)
-
-instance Enum MetaKey where
-    fromEnum = fromJust . flip lookup metakey_map
-    toEnum = fromJust . flip lookup (map swap metakey_map)
-
-metakey_map = [-- (LeftControl, 0x01)
-              --, (LeftShift, 0x02)
-              --, (LeftAlt, 0x04)
-              --, (LeftGui, 0x08)
-              --, (RightControl, 0x10)
-              --, (RightShift, 0x20)
-              --, (RightAlt, 0x40)
-              --, (RightGui, 0x80)
-              (LeftShift, 0x80)
-    ]
-
---newtype KeyFlags = KeyFlags Key deriving (Eq, Flags)
---instance Flags Key where
---    noflags = Null
---    andflags a b = toEnum (fromEnum a | fromEnum b)
---    butflags a b = toEnum (fromEnum a | fromEnum b)
---    butflags a b = toEnum (fromEnum a | fromEnum b)
---test = KeyFlags Norm .+. KeyFlags NAS
-
---{enum MyFlags, MyFlags
---  , myFlag1 = C_FLAG1
---  , myFlag2 = C_FLAG2
---  , myFlag3 = C_FLAG3
---  }
-
-data KeyCode = KeyCode [MetaKey] Key
-
 join delim l = concat (intersperse delim l)
-
-instance Show KeyCode where
-    show (KeyCode metas k) = concat [join "+" (map show metas), "-", show k]
- 
---instance Enum Key where
---    --fromEnum = fromJust . flip lookup dhkey_map
---    --toEnum = fromJust . flip lookup (map swap dhkey_map)
---    fromEnum Norm = 0xf0
---    fromEnum NAS = 0xf1
---    fromEnum NASLock = 0xf2
---    fromEnum Function = 0xf3
---    fromEnum Shift = 0xf4
---    fromEnum Control = 0xf5
---    fromEnum Alt = 0xf6
-
---dhkey_map = [
---    (Norm, 0xf0),
---    (NAS, 0xf1),
---    (NASLock, 0xf2),
---    (Function, 0xf3),
---    (Shift, 0xf4),
---    (Control, 0xf5),
---    (Alt, 0xf6)
---    ]
 
 data Key = Null
          | Dummy01
@@ -251,22 +180,6 @@ data Key = Null
 
 -- TODO: organize each into separate .hs, create converter for .xml LGS files
 
-normal_keys = [ 
-          H, U, Delete, Q,
-          J, Quote, A, LeftBracket,
-          M, Comma, Z, X,
-          Y, I, Escape, W,
-          K, Colon, S, B,
-          N, O, BackTick, E,
-          L, PadEnter, D, T,
-          Period, Slash, C, V,
-          RightBracket, P, DoubleQuote, R,
-          Semicolon, BackSlash, F, G,
-          Alt, Backspace, Control, Tab,
-          NAS, NASLock, Shift, CapsLock,
-          Space, Function, Return, Norm
- ]
-
 -- Aliases for prettier layouts:
 scol = Semicolon
 col = Colon
@@ -292,8 +205,6 @@ fn = Function
 pent = PadEnter
 dash = Minus
 
-sequence_map = [33,26,4,0,34,35,5,6,48,49,19,20,36,27,7,1,37,38,8,9,39,28,10,2,40,41,11,12,50,51,21,22,42,29,13,3,43,44,14,15,45,30,25,18,46,31,24,17,32,47,16,23]
-
 data Layer t = EmptyLayer | Layer -- TODO should EmptyLayer be all nulls?
 --      +----+           +----+           +----+           +----+
           t                t                t                t  
@@ -313,11 +224,9 @@ data Layer t = EmptyLayer | Layer -- TODO should EmptyLayer be all nulls?
  deriving (Show, Eq, Functor, Traversable, Foldable)
 
 
--- XXX TODO RawLayer and use of it to convert to raw mapping is a WIP.
--- TODO need to actually translate the ints to positions in the data constructor
 data RawLayer t = EmptyRawLayer | RawLayer t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t deriving (Show, Eq, Functor, Traversable, Foldable)
 
--- TODO this is almost certainly not the best way to represent+effect this mapping
+-- TODO this is almost certainly not the best way to represent+effect this mapping?
 toRaw EmptyLayer = EmptyRawLayer
 toRaw (Layer
 --      +----+           +----+           +----+           +----+
@@ -432,42 +341,24 @@ my_prog_dvorak = Layout {
 -- TODO: dvorak in cyrillic
 
 main = do
-    let dump key = putStrLn $ (show key) ++ " = " ++ (show $ fromEnum key)
-
-    --print $ KeyCode [LeftShift, LeftControl] Quote --TODO
-    --print $ sort default_qwerty_layout
-    --print $ sort normal_keys
-
-    --print $ map (fromJust . (flip elemIndex $ default_qwerty_layout)) normal_keys -- compute the sequence map
-    --print $ normal_keys
-    --print $ map (default_qwerty_layout !!) sequence_map
-    --
-    -- from when i was using lists rather than traversable functors
-    --let dumpRawMap Layout{normal = Layer normal} = print $ map (fromEnum . (!!) normal) sequence_map
-    --let dumpRawMap Layout{..} = print $ map (fromEnum . (!!) normal) sequence_map
-
-    print my_prog_dvorak
-
-    let fromEnumLayers Layout{..} = fmapDefault (fromEnum :: Key -> Int) normal
-    print $ fromEnumLayers my_prog_dvorak
+    -- applies fromEnum to each Key in the Layer, returning type Layer Int
+    --let fromEnumLayers Layout{..} = fmapDefault (fromEnum :: Key -> Int) normal
+    --print $ fromEnumLayers my_prog_dvorak
 
     let layerToRawMap EmptyLayer = []
-        layerToRawMap l = map fromEnum $ map (toList l !!) sequence_map
+        layerToRawMap l = map fromEnum $ (toList . toRaw) l
 
     let dumpRawHeader Layout{..} = putStrLn $ join "\n" [
-            "static char PROGMEM normal_keys [] = {" ++ join ", " (map show $ layerToRawMap normal  ) ++ "};",
-            "static char PROGMEM    nas_keys [] = {" ++ join ", " (map show $ layerToRawMap nas     ) ++ "};",
-            "static char PROGMEM     fn_keys [] = {" ++ join ", " (map show $ layerToRawMap function) ++ "};"
+            "#define KEY_DH_NORM 0xf0",
+            "#define KEY_DH_NAS 0xf1",
+            "#define KEY_DH_NASLK 0xf2",
+            "#define KEY_DH_FN 0xf3",
+            "#define KEY_DH_SHIFT 0xf4",
+            "#define KEY_DH_CTRL 0xf5",
+            "#define KEY_DH_ALT 0xf6",
+            "const char PROGMEM normal_keys [] = {" ++ join ", " (map show $ layerToRawMap normal  ) ++ "};",
+            "const char PROGMEM    nas_keys [] = {" ++ join ", " (map show $ layerToRawMap nas     ) ++ "};",
+            "const char PROGMEM     fn_keys [] = {" ++ join ", " (map show $ layerToRawMap function) ++ "};"
             ]
     dumpRawHeader my_prog_dvorak
 
-    print $ map ((!!) [
-          "a ",              "b ",              "c ",              "d",
-     "e ",  "f ",  "g ",   "h ",   "i ",  "j ",    "k ",  "l ",  "m ",    "n ",  "o ",  "p ",    "q ",  "r ",  "s",
-          "t ",              "u ",              "v ",              "w ",         "x ",  "y ",  "z",
-                           "aa",              "bb",              "cc",              "dd",
-     "ee",  "ff",  "gg",    "hh",  "ii",  "jj",    "kk",  "ll",  "mm",    "nn",  "oo",  "pp",    "qq",  "rr",  "ss",
-     "tt",  "uu",  "vv",         "ww",              "xx",              "yy",              "zz"
-                          ]) sequence_map
-    print $ layerToRawMap (normal my_prog_dvorak)
-    print $ map fromEnum (toList (toRaw $ normal my_prog_dvorak))
