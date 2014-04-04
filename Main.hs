@@ -418,23 +418,28 @@ rp = RightParenthesis
 --   ]
 
 main = do
-   let dump key = putStrLn $ (show key) ++ " = " ++ (show $ fromEnum key)
+    let dump key = putStrLn $ (show key) ++ " = " ++ (show $ fromEnum key)
 
-   --print $ KeyCode [LeftShift, LeftControl] Quote --TODO
-   --print $ sort default_qwerty_layout
-   --print $ sort normal_keys
+    --print $ KeyCode [LeftShift, LeftControl] Quote --TODO
+    --print $ sort default_qwerty_layout
+    --print $ sort normal_keys
 
-   --print $ map (fromJust . (flip elemIndex $ default_qwerty_layout)) normal_keys -- compute the sequence map
-   --print $ normal_keys
-   --print $ map (default_qwerty_layout !!) sequence_map
-   --
-   -- from when i was using lists rather than traversable functors
-   --let dumpRawMap Layout{normal = Layer normal} = print $ map (fromEnum . (!!) normal) sequence_map
-   --let dumpRawMap Layout{..} = print $ map (fromEnum . (!!) normal) sequence_map
+    --print $ map (fromJust . (flip elemIndex $ default_qwerty_layout)) normal_keys -- compute the sequence map
+    --print $ normal_keys
+    --print $ map (default_qwerty_layout !!) sequence_map
+    --
+    -- from when i was using lists rather than traversable functors
+    --let dumpRawMap Layout{normal = Layer normal} = print $ map (fromEnum . (!!) normal) sequence_map
+    --let dumpRawMap Layout{..} = print $ map (fromEnum . (!!) normal) sequence_map
 
-   print my_prog_dvorak
+    print my_prog_dvorak
 
-   let dumpRawMap Layout{..} = print $ toList normal 
-   let fromEnumLayers Layout{..} = fmapDefault (fromEnum :: Key -> Int) normal
-   dumpRawMap my_prog_dvorak
-   print $ fromEnumLayers my_prog_dvorak
+    let fromEnumLayers Layout{..} = fmapDefault (fromEnum :: Key -> Int) normal
+    print $ fromEnumLayers my_prog_dvorak
+
+    let dumpRawHeader Layout{..} = putStrLn $ join "\n" [
+            "static char PROGMEM normal_keys [] = {" ++ join ", " (map (show . fromEnum) $ toList normal) ++ "};",
+            "static char PROGMEM    nas_keys [] = {" ++ join ", " (map (show . fromEnum) $ toList normal) ++ "};",
+            "static char PROGMEM     fn_keys [] = {" ++ join ", " (map (show . fromEnum) $ toList normal) ++ "};"
+            ]
+    dumpRawHeader my_prog_dvorak
