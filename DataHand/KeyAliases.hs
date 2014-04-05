@@ -2,6 +2,7 @@ module DataHand.KeyAliases where
 import DataHand.Keys
 
 -- Aliases for prettier layouts:
+qm =  QuestionMark
 scol = Semicolon
 col = Colon
 com = Comma

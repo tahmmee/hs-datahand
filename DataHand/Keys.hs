@@ -50,7 +50,7 @@ data Key = Null
          | LeftBracket
          | RightBracket
          | BackSlash
-         | Number -- XXX is this also shift+3?
+         | Number -- XXX what is this? is this also shift+3?
          | Semicolon
          | Quote
          | BackTick
@@ -142,18 +142,37 @@ data Key = Null
          | Asterisk
          | LeftParenthesis
          | RightParenthesis
-         | DummyA8 | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD
+         | ShiftReturn
+         | ShiftEscape
+         | ShiftBackspace
+         | ShiftTab
+         | ShiftSpace
+         | ShiftMinus
          | Plus
          | LeftCurlyBracket
          | RightCurlyBracket
          | Pipe
-         | DummyB2 -- what is shift+"number"?
+         | ShiftNumber -- what is shift+"number"?
          | Colon
          | DoubleQuote
          | Tilde
-         | DummyB6 | DummyB7 | DummyB8
-         | DummyB9 | DummyBA | DummyBB | DummyBC | DummyBD | DummyBE | DummyBF | DummyC0
-         | DummyC1 | DummyC2 | DummyC3 | DummyC4 | DummyC5 | DummyC6 | DummyC7 | DummyC8
+         | LeftAngleBracket
+         | RightAngleBracket
+         | QuestionMark
+         | ShiftCapsLock
+         | F13
+         | F14
+         | F15
+         | F16
+         | F17
+         | F18
+         | F19
+         | F20
+         | F21
+         | F22
+         | F23
+         | F24
+         | DummyC6 | DummyC7 | DummyC8
          | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF
          | DummyD0 | DummyD1 | DummyD2 | DummyD3 | DummyD4 | DummyD5 | DummyD6 | DummyD7
          | DummyD8 | DummyD9 | DummyDA | DummyDB | DummyDC | DummyDD | DummyDE | DummyDF
@@ -168,4 +187,4 @@ data Key = Null
          | Shift
          | Control
          | Alt
-    deriving (Show, Eq, Ord, Bounded, Enum)
+         deriving (Show, Eq, Ord, Bounded, Enum)
