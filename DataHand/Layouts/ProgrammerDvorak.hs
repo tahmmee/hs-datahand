@@ -2,13 +2,14 @@ module DataHand.Layouts.ProgrammerDvorak where
 import DataHand.Layout
 import DataHand.Keys
 import DataHand.KeyAliases
+import Prelude hiding (Left, Right)
 
 -- NOTEs on my adaptation:
--- (why keys '[', ']' dont match is explained on his webpage. it took me awhile to realize
+-- Why keys '[', ']' dont match is explained on his webpage. it took me awhile to realize
 -- he shifts his fingers not along the normal columns! (instead he moves index fingers F->5,J->8)
 -- His rationale is that typing "]-" is awkward (for right placement) and
 -- that breaking up {} is not an option (for left placement; this one makes
--- a lot less sense to me, since they shouldnt be on the same side to begin with)
+-- a lot less sense to me, since they shouldnt be on the same side to begin with.
 --
 -- My thinking is that on the datahand, you must use a metakey to access BOTH numbers and symbols,
 -- so having numbers vs. symbols on the home row is largely the same. I
@@ -69,11 +70,26 @@ my_prog_dvorak = Layout {
 --                       +----+           +----+           +----+           +----+
                            rp              lcb               rb              Bang
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Zero Two  Null   Null Four Null   Null Six  Null   Null Eight Null
+    bksp nasl  sp    Zero Two   del   Null Four Null   Null Six  Null   Null Eight Null
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         ast              Hash             Plus             bktk
 -- +----+----+----+      +----+           +----+           +----+           +----+     
-  , function = EmptyLayer
+  , function = Layer
+--      +----+           +----+           +----+           +----+
+          F2               F4               F6               Up
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+    Null svn  Null   Null Five Null   Null thr  Null   Left Null Right  ret caps  Tab   
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+          F1               F3               F5              Down        Norm shft lctl
+--      +----+           +----+           +----+           +----+      +----+----+----+
+
+--                       +----+           +----+           +----+           +----+
+                           Up              lcb               rb              Bang
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+    bksp nasl  sp    Left Null Right  Null Four Null   Null Six  Null   Null Eight Null
+-- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     Alt  NAS  fn         Down             Hash             Plus             bktk
+-- +----+----+----+      +----+           +----+           +----+           +----+     
   , tenk = EmptyLayer
   }
 
