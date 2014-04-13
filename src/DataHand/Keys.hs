@@ -1,9 +1,9 @@
 module DataHand.Keys where
 
-data Key = Null
-         | Dummy01
-         | Dummy02
-         | Dummy03
+data Key = NoEvent
+         | ErrorRollOver
+         | POSTFail
+         | ErrorUndefined
          | A
          | B
          | C
@@ -50,7 +50,7 @@ data Key = Null
          | LeftBracket
          | RightBracket
          | BackSlash
-         | Number -- XXX what is this? is this also shift+3?
+         | Number -- XXX I think this is Ellipsis or INT2
          | Semicolon
          | Quote
          | BackTick
@@ -100,38 +100,66 @@ data Key = Null
          | Pad9
          | Pad0
          | PadPeriod
-         | Dummy64 | Dummy65 | Dummy66 | Dummy67 | Dummy68 | Dummy69
-         | Dummy6A | Dummy6B | Dummy6C | Dummy6D | Dummy6E | Dummy6F | Dummy70
-         | Dummy71 | Dummy72 | Dummy73 | Dummy74 | Dummy75 | Dummy76 | Dummy77 | Dummy78
-         | Dummy79 | Dummy7A | Dummy7B | Dummy7C | Dummy7D | Dummy7E | Dummy7F
-         | RegularShift
-         | Dummy81 | Dummy82 | Dummy83
-         | CapA
-         | CapB
-         | CapC
-         | CapD
-         | CapE
-         | CapF
-         | CapG
-         | CapH
-         | CapI
-         | CapJ
-         | CapK
-         | CapL
-         | CapM
-         | CapN
-         | CapO
-         | CapP
-         | CapQ
-         | CapR
-         | CapS
-         | CapT
-         | CapU
-         | CapV
-         | CapW
-         | CapX
-         | CapY
-         | CapZ
+         | Int1
+         | Application
+         | Power
+         | PadEqual
+         | F13
+         | F14
+         | F15
+         | F16
+         | F17
+         | F18
+         | F19
+         | F20
+         | F21
+         | F22
+         | F23
+         | F24
+         | Execute
+         | Help
+         | Menu
+         | Select
+         | Stop
+         | Again
+         | Undo
+         | Cut
+         | Copy
+         | Paste
+         | Find
+         | Mute
+         -- 0x80
+         | VolumeUp
+         | VolumeDown
+         | LockingCapsLock
+         | LockingNumLock
+         | LockingScrollLock
+         | PadComma
+         | PadEqualAgain
+         | Internat1
+         | Internat2
+         | Internat3
+         | Internat4
+         | Internat5
+         | Internat6
+         | Internat7
+         | Internat8
+         | Internat9
+         | Lang1
+         | Lang2
+         | Lang3
+         | Lang4
+         | Lang5
+         | Lang6
+         | Lang7
+         | Lang8
+         | Lang9
+         | AltErase
+         | SysRq
+         | Cancel
+         | Clear
+         | Prior
+         -- XXX stops matching up here. next in tabel are Return Pipe Oper Clear/Again
          | Bang
          | At
          | Hash
@@ -160,26 +188,33 @@ data Key = Null
          | RightAngleBracket
          | QuestionMark
          | ShiftCapsLock
-         | F13
-         | F14
-         | F15
-         | F16
-         | F17
-         | F18
-         | F19
-         | F20
-         | F21
-         | F22
-         | F23
-         | F24
+         | DummyBA
+         | DummyBB
+         | DummyBC
+         | DummyBD
+         | DummyBE
+         | DummyBF
+         | DummyC0
+         | DummyC1
+         | DummyC2
+         | DummyC3
+         | DummyC4
+         | DummyC5
          | DummyC6 | DummyC7 | DummyC8
          | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF
          | DummyD0 | DummyD1 | DummyD2 | DummyD3 | DummyD4 | DummyD5 | DummyD6 | DummyD7
          | DummyD8 | DummyD9 | DummyDA | DummyDB | DummyDC | DummyDD | DummyDE | DummyDF
-         | DummyE0 | DummyE1 | DummyE2 | DummyE3 | DummyE4 | DummyE5 | DummyE6 | DummyE7
+         | LeftControl
+         | LeftShift
+         | LeftAlt
+         | LeftGUI
+         | RightControl
+         | RightShift
+         | RightAlt
+         | RightGUI
          | DummyE8 | DummyE9 | DummyEA | DummyEB | DummyEC | DummyED | DummyEE | DummyEF
-         -- special datahand keycodes follow
-         | Norm
+         -- 0xf0 : special datahand keycodes follow
+         | Norm --FIXME this is like windows key???
          | NAS
          | NASLock
          | Function

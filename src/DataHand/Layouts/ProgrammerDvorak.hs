@@ -53,7 +53,7 @@ my_prog_dvorak = Layout {
 --                        +----+           +----+           +----+           +----+
                             G                C                R                L
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     bksp nasl  sp     D    H    esc    F    T    At     B    N   Hash   Pipe  S   bktk
+     bksp nasl  sp     D    H    esc    F    T    At     B    N   Hash   Pipe  S   bktk -- TODO put lwin somewhere here
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
       Alt  NAS  fn          M                W                V                Z  
 --  +----+----+----+      +----+           +----+           +----+           +----+     
@@ -62,7 +62,7 @@ my_prog_dvorak = Layout {
 --      +----+           +----+           +----+           +----+
          amp               lb              lcb               lp
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    Null svn  Null   Null Five Null   Null thr  Null   bslh One  Nine   ret caps  Tab   
+     ø   svn   ø      ø   Five  ø      ø   thr   ø     bslh One  Nine   ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
          til              perc             dol              eq          Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
@@ -70,7 +70,7 @@ my_prog_dvorak = Layout {
 --                       +----+           +----+           +----+           +----+
                            rp              lcb               rb              Bang
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Zero Two   del   Null Four Null   Null Six  Null   Null Eight Null
+    bksp nasl  sp    Zero Two   del    ø   Four  ø      ø   Six   ø      ø   Eight  ø  
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         ast              Hash             Plus             bktk
 -- +----+----+----+      +----+           +----+           +----+           +----+     
@@ -78,7 +78,7 @@ my_prog_dvorak = Layout {
 --      +----+           +----+           +----+           +----+
           F2               F4               F6               Up
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    Null svn  Null   Null Five Null   Null thr  Null   Left Null Right  ret caps  Tab   
+     ø   svn   ø      ø   Five  ø      ø   thr   ø     Left  ø   Right  ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
           F1               F3               F5              Down        Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
@@ -86,7 +86,7 @@ my_prog_dvorak = Layout {
 --                       +----+           +----+           +----+           +----+
                            Up              lcb               rb              Bang
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Left Null Right  Null Four Null   Null Six  Null   Null Eight Null
+    bksp nasl  sp    Left  ø   Right   ø   Four  ø      ø   Six  lwin    ø   Eight  ø  
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         Down             Hash             Plus             bktk
 -- +----+----+----+      +----+           +----+           +----+           +----+     
@@ -124,17 +124,17 @@ strict_prog_dvorak = Layout {
 --      +----+           +----+           +----+           +----+
          perc              svn             Five              thr
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     del  amp  dol    esc lb   numl   Null lcb  Null   Null rcb   lp     ret caps  Tab   
+     del  amp  dol    esc lb   numl    ø   lcb   ø      ø   rcb   lp     ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-         Null             Null             Null             Null        Norm shft lctl
+          ø                ø                ø                ø          Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
                           Zero             Two              Four             Six
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp     eq  ast  Bang   Nine  rp  Null   Null Null Null   Null Null Null
+    bksp nasl  sp     eq  ast  Bang   Nine  rp   ø      ø    ø    ø      ø    ø    ø  
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     Alt  NAS  fn         Null             Null             Null             Null
+     Alt  NAS  fn          ø                ø                ø                ø  
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , function = EmptyLayer
   , tenk = EmptyLayer

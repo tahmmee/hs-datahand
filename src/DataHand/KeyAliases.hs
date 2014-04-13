@@ -2,6 +2,8 @@ module DataHand.KeyAliases where
 import DataHand.Keys
 
 -- Aliases for prettier layouts:
+ø = NoEvent
+lwin = Application
 qm =  QuestionMark
 scol = Semicolon
 col = Colon
@@ -40,4 +42,3 @@ rp = RightParenthesis
 ast = Asterisk
 eq = Equal
 til = Tilde
-
