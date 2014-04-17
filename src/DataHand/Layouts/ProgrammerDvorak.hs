@@ -41,19 +41,21 @@ my_prog_dvorak = Layout {
 --     consonants (i think that's the original dvorak reasoning).
 --   * forwardslash + nas = backslash
 --   * TODO: NAS col, dqt, etc locations are same as Normal?
+--    have pipe here shiftable to \ (not a big deal since nas+/ makes more sense anyway
+--    copy, paste, etc macros that are portable
     normal = Layer
 --       +----+           +----+           +----+           +----+
-          scol              com              per              P
+           sqt              com              per              P
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     col   A    dqt   dash  O    X      qm   E    Y     fslh  U    I      ret caps  Tab   
+      At   A   dash   Pipe  O    X      qm   E    Y     fslh  U    I      ret caps  Tab
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-           sqt              Q                J                K          Norm shft lctl
+          scol              Q                J                K          Norm shft lctl
 --       +----+           +----+           +----+           +----+      +----+----+----+
 
 --                        +----+           +----+           +----+           +----+
                             G                C                R                L
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     bksp nasl  sp     D    H    esc    F    T    At     B    N   Hash   Pipe  S   bktk -- TODO put lwin somewhere here
+     bksp nasl  sp     D    H    esc    F    T   lwin    B    N   lapp    del  S    ø
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
       Alt  NAS  fn          M                W                V                Z  
 --  +----+----+----+      +----+           +----+           +----+           +----+     
@@ -62,33 +64,33 @@ my_prog_dvorak = Layout {
 --      +----+           +----+           +----+           +----+
          amp               lb              lcb               lp
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø   svn   ø      ø   Five  ø      ø   thr   ø     bslh One  Nine   ret caps  Tab   
+     ø    svn  ø      ø   Five  ø      ø   thr   ø     bslh One  Nine   ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
          til              perc             dol              eq          Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
-                           rp              lcb               rb              Bang
+                           rp              rcb               rb              Bang
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Zero Two   del    ø   Four  ø      ø   Six   ø      ø   Eight  ø  
+    bksp nasl  sp    eigt Zero  Caret  ø    Two  ø      ø   Four  ø      ø    Six   ø  
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         ast              Hash             Plus             bktk
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , function = Layer
 --      +----+           +----+           +----+           +----+
-          F2               F4               F6               Up
+          F9               F5               F1               Up
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø   svn   ø      ø   Five  ø      ø   thr   ø     Left  ø   Right  ret caps  Tab   
+     ø    ø    ø      ø    ø    ø      ø    ø    ø     Left Home rite    ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-          F1               F3               F5              Down        Norm shft lctl
+          F11              F7               F3              Down        Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
-                           Up              lcb               rb              Bang
+                           Up               F2               F6               F10 
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Left  ø   Right   ø   Four  ø      ø   Six  lwin    ø   Eight  ø  
+    bksp nasl  sp    Left Home rite    End  ø    ø      ø    ø    ø      ø    ø    ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     Alt  NAS  fn         Down             Hash             Plus             bktk
+     Alt  NAS  fn         Down              F4               F8               F12 
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , tenk = EmptyLayer
   }

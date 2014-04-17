@@ -16,6 +16,7 @@ data Key = NoEvent
          | J
          | K
          | L
+         -- 0x10
          | M
          | N
          | O
@@ -32,6 +33,7 @@ data Key = NoEvent
          | Z
          | One
          | Two
+         -- 0x20
          | Three
          | Four
          | Five
@@ -48,6 +50,7 @@ data Key = NoEvent
          | Minus
          | Equal
          | LeftBracket
+         -- 0x30
          | RightBracket
          | BackSlash
          | Number -- XXX I think this is Ellipsis or INT2
@@ -64,6 +67,7 @@ data Key = NoEvent
          | F4
          | F5
          | F6
+         -- 0x40
          | F7
          | F8
          | F9
@@ -80,6 +84,7 @@ data Key = NoEvent
          | End
          | PageDown
          | Right
+         -- 0x50
          | Left
          | Down
          | Up
@@ -96,6 +101,7 @@ data Key = NoEvent
          | Pad5
          | Pad6
          | Pad7
+         -- 0x60
          | Pad8
          | Pad9
          | Pad0
@@ -112,6 +118,7 @@ data Key = NoEvent
          | F18
          | F19
          | F20
+         -- 0x70
          | F21
          | F22
          | F23
@@ -145,6 +152,7 @@ data Key = NoEvent
          | Internat7
          | Internat8
          | Internat9
+         -- 0x90
          | Lang1
          | Lang2
          | Lang3
@@ -159,9 +167,15 @@ data Key = NoEvent
          | Cancel
          | Clear
          | Prior
-         -- XXX stops matching up here. next in tabel are Return Pipe Oper Clear/Again
+         -- HACK FIXME the next set of symbols are actually shifted versions of the
+         -- keys (i.e. + 0x80). I don't know if this is the correct way to
+         -- represent these keys. I think maybe there's another register for
+         -- metakeystate that I need to be dealing with. I'm not, for now, and
+         -- these produce the same result anyway and can be shifted back (i
+         -- think).
          | Bang
          | At
+         -- 0xA0
          | Hash
          | Dollar
          | Percent
@@ -178,32 +192,45 @@ data Key = NoEvent
          | ShiftMinus
          | Plus
          | LeftCurlyBracket
+         -- 0xB0
          | RightCurlyBracket
          | Pipe
-         | ShiftNumber -- what is shift+"number"?
+         | ShiftNumber -- what is shift+"number"???
          | Colon
          | DoubleQuote
          | Tilde
          | LeftAngleBracket
          | RightAngleBracket
          | QuestionMark
-         | ShiftCapsLock
+         -- end HACKed keycodes
+         | DummyB9
          | DummyBA
          | DummyBB
          | DummyBC
          | DummyBD
          | DummyBE
          | DummyBF
+         -- 0xC0
          | DummyC0
          | DummyC1
          | DummyC2
          | DummyC3
          | DummyC4
          | DummyC5
-         | DummyC6 | DummyC7 | DummyC8
-         | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF
+         | DummyC6
+         | DummyC7
+         | DummyC8
+         | DummyC9
+         | DummyCA
+         | DummyCB
+         | DummyCC
+         | DummyCD
+         | DummyCE
+         | DummyCF
+         -- 0xD0
          | DummyD0 | DummyD1 | DummyD2 | DummyD3 | DummyD4 | DummyD5 | DummyD6 | DummyD7
          | DummyD8 | DummyD9 | DummyDA | DummyDB | DummyDC | DummyDD | DummyDE | DummyDF
+         -- 0xE0
          | LeftControl
          | LeftShift
          | LeftAlt

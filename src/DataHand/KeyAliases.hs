@@ -1,9 +1,11 @@
 module DataHand.KeyAliases where
 import DataHand.Keys
+import Prelude hiding (Left, Right)
 
 -- Aliases for prettier layouts:
 ø = NoEvent
-lwin = Application
+lwin = LeftGUI
+lapp = Application
 qm =  QuestionMark
 scol = Semicolon
 col = Colon
@@ -42,3 +44,4 @@ rp = RightParenthesis
 ast = Asterisk
 eq = Equal
 til = Tilde
+rite = Right
