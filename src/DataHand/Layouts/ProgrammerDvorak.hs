@@ -20,10 +20,14 @@ import Prelude hiding (Left, Right)
 -- ~ %7531 9  0 2468 `
 --       becomes
 --    &[{(      )}]!
---    7531 9  0 2468
+--    7531 9  8 0246
 --    ~%$=      *#+`
+--  The higher frequency of lower digits is real. Classic dvorak was invented
+--  before the digital age, but since then, the frequency of 0 has far exceeded
+--  all other even numerals, hence my shifting of them rightwards. I was quite
+--  suprised at how much better this arrangement served me.
 --
--- TODO use some 2d rendering to make an image of the map
+-- TODO use some 2d rendering to make an image of the map, ideally one that looks similar to the original stickers.
 -- TODO does it make sense to leave ;: '" <> /? @^ #` -_ out of NAS? These keys are
 --      there because of original prog-dvorak placement. I get the utility of having
 --      their unshifted halves one keystroke away, but having some symbols accessed
@@ -33,6 +37,20 @@ import Prelude hiding (Left, Right)
 --      The orig layout added <> :; ,. /? (no \|)which were all already accessible in Normal mode
 -- TODO considerations: on orig, capslock allowed easy hex entry... solve using 10k layer for hex entry
 -- TODO support exotic shift states to dhteensy like @^ key in prog.dv, maybe by adding a separate Shift key layer
+-- TODO maybe switch out @ for something used more frequently like #+*
+-- TODO BETTER FNMOUSE/ARROWS: have fn lever go to last fn state, then cycle fn
+--      types [arrows, mouse, more if desired]. Thereafter, use Norm to return, and
+--      then Fn to switch back to last Fn mode in that list. This frees up the two
+--      middle finger buttons for more useful binds.
+-- TODO Add FnArrow+NAS mode that turns arrow keys into pageup,down,home,end
+-- TODO naslock and capslock are pretty much wasted. i can hold the damn key
+--      down just fine, thanks. instead, make naslock go to 10kmode and capslock
+--      cycle whole layouts, maybe. i may want to put capslock somewhere buried in
+--      NAS, just in case i ever need it.
+-- TODO Profile switching: hold both locks and press a home row key to select
+--      that slot. or release a lock key last to cycle the opposite direction.
+-- TODO USB connection to other hand, attach as separate devices?
+
 my_prog_dvorak = Layout {
 -- high prio symbols: ,. :; '" - /? | @ # `
 --                    + \
@@ -80,7 +98,7 @@ my_prog_dvorak = Layout {
 --      +----+           +----+           +----+           +----+
           F9               F5               F1               Up
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø    ø    ø      ø    ø    ø      ø    ø    ø     Left Home rite    ret caps  Tab   
+     ø    ø    ø      ø    ø    ø     pgup  End pgdn   Left Home rite    ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
           F11              F7               F3              Down        Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
@@ -88,7 +106,7 @@ my_prog_dvorak = Layout {
 --                       +----+           +----+           +----+           +----+
                            Up               F2               F6               F10 
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Left Home rite    End  ø    ø      ø    ø    ø      ø    ø    ø
+    bksp nasl  sp    Left Home rite   pgup  End pgdn    ø    ø    ø      ø    ø    ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         Down              F4               F8               F12 
 -- +----+----+----+      +----+           +----+           +----+           +----+     

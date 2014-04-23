@@ -45,3 +45,5 @@ ast = Asterisk
 eq = Equal
 til = Tilde
 rite = Right
+pgup = PageUp
+pgdn = PageDown
