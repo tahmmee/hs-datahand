@@ -9,15 +9,15 @@ ab1 = Q
 ab2 = W
 ab3 = E
 abU = R
-ab4 = ø
-ab5 = ø
+ab4 = D
+ab5 = F
 
 it1 = Z
 it2 = X
 it3 = C
 it4 = V
-it5 = ø
-it6 = ø
+it5 = B
+it6 = N
 
 camU = Up
 camD = Down
@@ -40,7 +40,15 @@ selC = ø
 
 shop = F4
 dlvr = ø
-buys = ø -- buy sticky item
+buyS = ø -- buy sticky item
+buyQ = ø
+sSht = F6
+take = Home
+glyp = J
+scor = BackTick
+--altT =
+tCht = Return
+--aCht = 
 
 evnt = Space
 
@@ -64,9 +72,9 @@ dota2_layout = Layout {
 --       +----+           +----+           +----+           +----+
            ab1              ab2              ab3              ab4
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-      ø   sel2  ab4    ø   sel1  ab5    ø   hold  it6    ø   attk  it5    ø    ø    ø
+      ø   sel2  ab4    ø   sel1  ab5    ø   hold  it6    ø   attk  it5   Shift ø    Alt
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-           it1              it2              it3              it4         ø    NAS  ø  
+           it1              it2              it3              it4         ø    NAS  Ctrl
 --       +----+           +----+           +----+           +----+      +----+----+----+
     ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø
   , nas = EmptyLayer
@@ -80,11 +88,12 @@ dota2_experimental_layout = Layout {
 --       +----+           +----+           +----+           +----+
           camU              ab3              ab2              ab1
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     camL sel1 camR    it1 sel2  ab5    it2 hold  ab4   it3  attk  abU    Tab  ø    ø
+     camL sel1 camR    it1 sel2  ab5    it2 hold  ab4   it3  attk  abU    Tab  ø   Ctrl
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-          camD              it4              it5              it6         ø    NAS  ø  
+          camD              it4              it5              it6        Shift NAS  Alt
 --       +----+           +----+           +----+           +----+      +----+----+----+
 
+-- TODO make a key here temporarily toggle back to the regular layout so i can type. Maybe the key that's normally Fn can toggle it.
 --                        +----+           +----+           +----+           +----+
                             ø                ø                ø                ø  
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
@@ -93,7 +102,25 @@ dota2_experimental_layout = Layout {
       ø    ø    ø           ø                ø                ø                ø      
 --  +----+----+----+      +----+           +----+           +----+           +----+     
 
-  , nas = EmptyLayer
-  , function = EmptyLayer
+  , nas = Layer
+--       +----+           +----+           +----+           +----+
+          camU              ab3              ab2              ab1
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     camL sel1 camR    it1 sel2  ab5    it2 hold  ab4   it3  attk  abU    Tab  ø   Ctrl
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+          camD              it4              it5              it6        Shift NAS  Alt
+--       +----+           +----+           +----+           +----+      +----+----+----+
+    ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø
+    -- a layer without all item binds for microing
+    -- TODO key for autoattack toggle macro, since microed units may benefit from this, especially post-ability-aa.
+  , function = Layer
+--       +----+           +----+           +----+           +----+
+          camU              ab3              ab2              ab1
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+     camL sel1 camR    it1 sel2  ab5    it2 hold  ab4   it3  attk  abU    Tab  ø   Ctrl
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+          camD             sel3             sel4             sel5        Shift NAS  Alt
+--       +----+           +----+           +----+           +----+      +----+----+----+
+    ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø
   , tenk = EmptyLayer
   }
