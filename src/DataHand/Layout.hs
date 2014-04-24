@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveFunctor, DeriveTraversable, DeriveFoldable #-}
-module DataHand.Layout where
+module DataHand.Layout (Layout(..), Layer(..), RawLayer(..), toRaw) where
 import Data.Traversable
 import Data.Foldable
 import DataHand.Keys
@@ -15,6 +15,7 @@ data Layer t = EmptyLayer
              | Layer t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
              deriving (Show, Eq, Functor, Traversable, Foldable)
 
+-- This type is just for remapping the indexes of the keys to the order they appear in the firmware.
 data RawLayer t = EmptyRawLayer -- TODO should be all nulls version of the next?
                 | RawLayer t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t
                 deriving (Show, Eq, Functor, Traversable, Foldable)

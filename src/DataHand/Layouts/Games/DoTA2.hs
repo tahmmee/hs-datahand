@@ -1,4 +1,4 @@
-module DataHand.Layouts.Games.DoTA2 where
+module DataHand.Layouts.Games.DoTA2 (standard, experimental) where
 import DataHand.Layout
 import DataHand.Keys
 import Prelude hiding (Left, Right)
@@ -67,7 +67,7 @@ hold = H
 -- maybe have right hand for quickshop?
 -- shop mode could be capslock or norm lever while held up
 
-dota2_layout = Layout {
+standard = Layout {
     normal = Layer
 --       +----+           +----+           +----+           +----+
            ab1              ab2              ab3              ab4
@@ -83,7 +83,7 @@ dota2_layout = Layout {
   }
 
 
-dota2_experimental_layout = Layout {
+experimental = Layout {
     normal = Layer
 --       +----+           +----+           +----+           +----+
           camU              ab3              ab2              ab1

@@ -19,5 +19,5 @@ main = do
             "const char PROGMEM    nas_keys [] = {" ++ join ", " (map show $ layerToRawMap nas     ) ++ "};",
             "const char PROGMEM     fn_keys [] = {" ++ join ", " (map show $ layerToRawMap function) ++ "};"
             ]
-    dumpRawHeader my_prog_dvorak
 
+    dumpRawHeader experimental

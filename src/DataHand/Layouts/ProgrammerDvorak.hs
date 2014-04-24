@@ -1,4 +1,4 @@
-module DataHand.Layouts.ProgrammerDvorak where
+module DataHand.Layouts.ProgrammerDvorak (experimental) where
 import DataHand.Layout
 import DataHand.Keys
 import DataHand.KeyAliases
@@ -51,7 +51,7 @@ import Prelude hiding (Left, Right)
 --      that slot. or release a lock key last to cycle the opposite direction.
 -- TODO USB connection to other hand, attach as separate devices?
 
-my_prog_dvorak = Layout {
+experimental = Layout {
 -- high prio symbols: ,. :; '" - /? | @ # `
 --                    + \
 -- Rules, rationale:
@@ -122,7 +122,7 @@ dvorak_cyrillic = Layout {
   }
 
 -- XXX incomplete, probably should be abandoned
-strict_prog_dvorak = Layout {
+strict = Layout {
     normal = Layer
 --       +----+           +----+           +----+           +----+
           scol              com              per              P
