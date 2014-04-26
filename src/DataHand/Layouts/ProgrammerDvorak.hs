@@ -35,6 +35,7 @@ import Prelude hiding (Left, Right)
 --      solutions.
 --      Maybe add the shifter versions into side-keys in NAS like orig.datahand did?
 --      The orig layout added <> :; ,. /? (no \|)which were all already accessible in Normal mode
+--      THE ABOVE IS SIGNIFICANT AND SHOULD BE ADDRESSED SOON. <$> isreally annoying to type atm!!
 -- TODO considerations: on orig, capslock allowed easy hex entry... solve using 10k layer for hex entry
 -- TODO support exotic shift states to dhteensy like @^ key in prog.dv, maybe by adding a separate Shift key layer
 -- TODO maybe switch out @ for something used more frequently like #+*
@@ -82,7 +83,7 @@ experimental = Layout {
 --      +----+           +----+           +----+           +----+
          amp               lb              lcb               lp
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø    svn  ø      ø   Five  ø      ø   thr   ø     bslh One  Nine   ret caps  Tab   
+     ø    svn  ø      ø   Five  ø      lab thr   rab   bslh One  Nine   ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
          til              perc             dol              eq          Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
