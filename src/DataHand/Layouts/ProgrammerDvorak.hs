@@ -35,8 +35,8 @@ import Prelude hiding (Left, Right)
 --      solutions.
 --      Maybe add the shifter versions into side-keys in NAS like orig.datahand did?
 --      The orig layout added <> :; ,. /? (no \|)which were all already accessible in Normal mode
---      THE ABOVE IS SIGNIFICANT AND SHOULD BE ADDRESSED SOON. <$> isreally annoying to type atm!!
--- TODO considerations: on orig, capslock allowed easy hex entry... solve using 10k layer for hex entry
+-- TODO DO 10k LAYER and support HEX ENTRY easily (have a-f, h as suffix, 0x prefix macro, ", 0x" macro maybe even
+-- TODO MACRO SUPPORT for situations like the above.
 -- TODO support exotic shift states to dhteensy like @^ key in prog.dv, maybe by adding a separate Shift key layer
 -- TODO maybe switch out @ for something used more frequently like #+*
 -- TODO BETTER FNMOUSE/ARROWS: have fn lever go to last fn state, then cycle fn
@@ -51,6 +51,11 @@ import Prelude hiding (Left, Right)
 -- TODO Profile switching: hold both locks and press a home row key to select
 --      that slot. or release a lock key last to cycle the opposite direction.
 -- TODO USB connection to other hand, attach as separate devices?
+-- TODO: NAS col, dqt, etc locations are same as Normal?
+--   have pipe here shiftable to \ (not a big deal since nas+/ makes more sense anyway
+--   copy, paste, etc macros that are portable
+-- TODO make / shift to \ rather than ? , consider other possibilites
+-- TODO missing fn keys like printscreen,scrolllock, numlock
 
 experimental = Layout {
 -- high prio symbols: ,. :; '" - /? | @ # `
@@ -58,10 +63,8 @@ experimental = Layout {
 -- Rules, rationale:
 --   * QuestionMark and other punctuanion on left hand because most words end with
 --     consonants (i think that's the original dvorak reasoning).
+--
 --   * forwardslash + nas = backslash
---   * TODO: NAS col, dqt, etc locations are same as Normal?
---    have pipe here shiftable to \ (not a big deal since nas+/ makes more sense anyway
---    copy, paste, etc macros that are portable
     normal = Layer
 --       +----+           +----+           +----+           +----+
            sqt              com              per              P
@@ -97,19 +100,19 @@ experimental = Layout {
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , function = Layer
 --      +----+           +----+           +----+           +----+
-          F9               F5               F1               Up
+          ø                ø               pgup              Up
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø    ø    ø      ø    ø    ø     pgup  End pgdn   Left Home rite    ret caps  Tab   
+     F11  ø    F9     F7   ø    F5     F3  End   F1   Left Home rite    ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-          F11              F7               F3              Down        Norm shft lctl
+          ø                ø               pgdn             Down        Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
-                           Up               F2               F6               F10 
+                           Up              pgup              ins              ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Left Home rite   pgup  End pgdn    ins  ø    ø      ø    ø    ø
+    bksp nasl  sp    Left Home rite    F2   End  F4     F6   ø    F8     F10  ø    F12
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     Alt  NAS  fn         Down              F4               F8               F12 
+     Alt  NAS  fn         Down             pgdn              ø                ø
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , tenk = EmptyLayer
   }
