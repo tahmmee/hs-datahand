@@ -56,6 +56,8 @@ import Prelude hiding (Left, Right)
 --   copy, paste, etc macros that are portable
 -- TODO make / shift to \ rather than ? , consider other possibilites
 -- TODO missing fn keys like printscreen,scrolllock, numlock
+-- TODO have winkey be both levers simulaneously pressed
+-- TODO C-a a,n,p,[,] macros for screen
 
 experimental = Layout {
 -- high prio symbols: ,. :; '" - /? | @ # `
@@ -86,7 +88,7 @@ experimental = Layout {
 --      +----+           +----+           +----+           +----+
          amp               lb              lcb               lp
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø    svn  ø      ø   Five  ø      lab thr   rab   bslh One  Nine   ret caps  Tab   
+     ø    svn Plus    ø   Five  ø      lab thr   rab   bslh One  Nine   ret caps  Tab
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
          til              perc             dol              eq          Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
