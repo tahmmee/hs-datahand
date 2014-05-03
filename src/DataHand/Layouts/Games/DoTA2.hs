@@ -5,6 +5,18 @@ import Prelude hiding (Left, Right)
 
 ø = NoEvent
 
+attk = A
+move = M
+stop = S
+hold = H
+
+lvlu = O
+upst = U
+
+glyp = J
+paus = F9
+scor = BackTick
+
 ab1 = Q
 ab2 = W
 ab3 = E
@@ -23,8 +35,11 @@ camU = Up
 camD = Down
 camL = Left
 camR = Right
+shCs = I
+evnt = Space
 
 selH = F1
+selU = ø
 selO = ø
 sel1 = One
 sel2 = Two
@@ -32,30 +47,24 @@ sel3 = Three
 sel4 = Four
 sel5 = Five
 sel6 = Six
-sel7 = Seven
-sel8 = Eight
-sel9 = Nine
-sel0 = Zero
-selC = ø
+-- seems there are no more than 6 according to settings UI
+--sel7 = Seven
+--sel8 = Eight
+--sel9 = Nine
+--sel0 = Zero
+selC = F2
 
 shop = F4
-dlvr = ø
-buyS = ø -- buy sticky item
-buyQ = ø
+dlvr = F3
+buyQ = F5
+buyS = F8
 sSht = F6
 take = Home
-glyp = J
-scor = BackTick
+
 --altT =
 tCht = Return
 --aCht = 
-
-evnt = Space
-
-attk = A
-move = M
-stop = S
-hold = H
+qCht = Y
 
 -- notes: 
 --   sel1 can be used in place of selH to control e.g. beastmaster + boar
@@ -66,6 +75,7 @@ hold = H
 -- consider inverting abil,item order at risk of making this extra confusing
 -- maybe have right hand for quickshop?
 -- shop mode could be capslock or norm lever while held up
+-- TODO: rune + roshan screen bookmarks
 
 standard = Layout {
     normal = Layer
