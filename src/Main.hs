@@ -15,9 +15,10 @@ main = do
         layerToRawMap l = map fromEnum $ (toList . toRaw) l
 
     let dumpRawHeader Layout{..} = putStrLn $ join "\n" [
-            "const char PROGMEM normal_keys [] = {" ++ join ", " (map show $ layerToRawMap normal  ) ++ "};",
-            "const char PROGMEM    nas_keys [] = {" ++ join ", " (map show $ layerToRawMap nas     ) ++ "};",
-            "const char PROGMEM     fn_keys [] = {" ++ join ", " (map show $ layerToRawMap function) ++ "};"
+            "// This header was generated using https://github.com/elitak/hs-datahand"
+          , "const char PROGMEM normal_keys [] = {" ++ join ", " (map show $ layerToRawMap normal  ) ++ "};"
+          , "const char PROGMEM    nas_keys [] = {" ++ join ", " (map show $ layerToRawMap nas     ) ++ "};"
+          , "const char PROGMEM     fn_keys [] = {" ++ join ", " (map show $ layerToRawMap function) ++ "};"
             ]
 
     dumpRawHeader experimental
