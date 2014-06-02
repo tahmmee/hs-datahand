@@ -58,6 +58,7 @@ import Prelude hiding (Left, Right)
 -- TODO missing fn keys like printscreen,scrolllock, numlock
 -- TODO have winkey be both levers simulaneously pressed
 -- TODO C-a a,n,p,[,] macros for screen
+-- TODO give some thought to the difficulty i have typing ("1");
 
 experimental = Layout {
 -- high prio symbols: ,. :; '" - /? | @ # `
