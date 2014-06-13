@@ -2,7 +2,6 @@ module DataHand.Layouts.ProgrammerDvorak (experimental) where
 import DataHand.Layout
 import DataHand.Keys
 import DataHand.KeyAliases
-import Prelude hiding (Left, Right)
 
 -- NOTEs on my adaptation:
 -- Why keys '[', ']' dont match is explained on his webpage. it took me awhile to realize
@@ -103,19 +102,19 @@ experimental = Layout {
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , function = Layer
 --      +----+           +----+           +----+           +----+
-          ø                ø               pgup              Up
+          ø                ø               pgup              up
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     F11  ø    F9     F7   ø    F5     F3  End   F1   Left Home rite    ret caps  Tab   
+     F11  ø    F9     F7   ø    F5     F3  End   F1   left Home rite    ret caps  Tab   
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-          ø                ø               pgdn             Down        Norm shft lctl
+          ø                ø               pgdn             down        Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
-                           Up              pgup              ins              ø
+                           up              pgup              ins              ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    Left Home rite    F2   End  F4     F6   ø    F8     F10  ø    F12
+    bksp nasl  sp    left Home rite    F2   End  F4     F6   ø    F8     F10  ø    F12
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     Alt  NAS  fn         Down             pgdn              ø                ø
+     Alt  NAS  fn         down             pgdn              ø                ø
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , tenk = EmptyLayer
   }

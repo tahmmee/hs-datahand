@@ -83,11 +83,11 @@ data Key = NoEvent
          | Delete
          | End
          | PageDown
-         | Right
+         | RightArrow
          -- 0x50
-         | Left
-         | Down
-         | Up
+         | LeftArrow
+         | DownArrow
+         | UpArrow
          | NumLock
          | PadSlash
          | PadAsterix
