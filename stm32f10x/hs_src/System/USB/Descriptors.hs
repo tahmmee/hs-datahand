@@ -6,6 +6,7 @@ module System.USB.Descriptors
     , ConfigDesc(..)
     , ConfigAttribs
     , DeviceStatus(..)
+    , DeviceCapability(..)
     , Interface
     , InterfaceDesc(..)
     , EndpointDesc(..)
@@ -23,7 +24,7 @@ module System.USB.Descriptors
     ) where
 
 import Data.ByteString (ByteString)
-import Data.EnumSet
+import Data.EnumSet (T)
 
 data DeviceDesc = DeviceDesc
  { -- | USB specification release number.
@@ -98,19 +99,24 @@ data ConfigDesc = ConfigDesc
 
     } --deriving (Show, Read, Eq)
 
+type ConfigAttribs = DeviceStatus
+type DeviceStatus = T Word8 DeviceCapability
 -- | The USB 2.0 specification specifies that the configuration attributes only
 -- describe the device status.
-type ConfigAttribs = DeviceStatus
-
-deviceStatus = fromEnum DeviceCapability
-
 data DeviceCapability = 
-    RemoteWakeup          -- ^ The Remote Wakeup field indicates whether the
+    Reserved0
+  | Reserved1
+  | Reserved2
+  | Reserved3
+  | Reserved4
+  | RemoteWakeup          -- ^ The Remote Wakeup field indicates whether the
                            --   device is currently enabled to request remote
                            --   wakeup. The default mode for devices that
                            --   support remote wakeup is disabled.
   | SelfPowered           -- ^ The Self Powered field indicates whether the
-                           --   device is currently self-powered
+  | USB1BusPowered -- should always be set
+  deriving (Enum)
+
 --instance Eq DeviceStatus where
 --    (a :: DeviceStatus) == (b :: DeviceStatus) = unpackWord8LE 
 

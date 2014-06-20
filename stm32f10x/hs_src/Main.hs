@@ -9,6 +9,8 @@ import Data.List (intersperse)
 import DataHand.Layout
 import DataHand.Layouts.ProgrammerDvorak
 import System.USB.Descriptors
+import Data.EnumSet as ES hiding (empty)
+import Jhc.Enum as E
 
 import Data.ByteString (empty)
 
@@ -30,7 +32,7 @@ join delim l = concat (intersperse delim l)
 main :: IO ()
 main = do
     let layerToRawMap EmptyLayer = []
-        layerToRawMap l = map fromEnum $ (toList . toRaw) l
+        layerToRawMap l = map E.fromEnum $ (toList . toRaw) l
 --    let dumpRawHeader Layout{normal=normal, nas=nas, function=function} = join "\n" [
 --            "// This header was generated using https://github.com/elitak/hs-datahand"
 --          , "const char PROGMEM normal_keys [] = {" ++ join ", " (map show $ layerToRawMap normal  ) ++ "};"
@@ -64,6 +66,8 @@ typedef struct
 } GPIO_TypeDef;
 --}
 
+-- TODO move descriptor reporting related stuff to DataHand.USB.Descriptors or so
+
 device_descriptor = DeviceDesc {
     deviceUSBSpecReleaseNumber = (0, 0, 0, 2)
   , deviceReleaseNumber  = (0, 0, 0, 1)
@@ -87,15 +91,12 @@ config_descriptor = ConfigDesc
       configValue = 1 -- TODO i shouldnt have to manually enum these. constructors should resolve these for me. or atleast not by index?
 
     , configStrIx = Just 0
-    , configAttribs = DeviceStatus {
-        remoteWakeup = False
-      , selfPowered = False
-    }--0xC0 -- TODO this type holds bools. lookup what each is and flesh out the rest of it. then make marshalling func.
+    , configAttribs = fromEnums [SelfPowered, USB1BusPowered] -- XXX check this matches 0xC0
     , configMaxPower = 50
     , configInterfaces = []
     , configExtra = empty
     }
--- TODO make this all compilable by ghc as a cabal library, then build a test harness around it, first as basic exe then quickcheck etc.
+-- TODO make this all compilable by ghc as a cabal library, using ifdefs to differentiate ghc/jhc if necessary, then build a test harness around it, first as basic exe then quickcheck etc.
 
 
 --const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {

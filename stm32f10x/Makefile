@@ -262,6 +262,7 @@ hs_main.c : hs_src/Main.hs hs_src/*/*.hs hs_src/*/*/*.hs
     -f ffi \
     -p applicative \
     -p bytestring \
+    -p jhc \
     -X RecordWildCards \
 	--tdir=$(JHCRTS_SRC) -C -o $@ $<
     #-X DeriveFunctor \
@@ -276,7 +277,6 @@ hs_main.c : hs_src/Main.hs hs_src/*/*.hs hs_src/*/*/*.hs
     #-p haskell2010 \
     #-p haskell98 \
     #-p html \
-    #-p jhc \
     #-p parsec \
     #-p pretty \
     #-p safe \
