@@ -77,7 +77,7 @@ device_descriptor = DeviceDesc {
   , deviceMaxPacketSize0 = 32
   , deviceVendorId = 0x16C0 -- XXX endswap?
   , deviceProductId = 0x047D
-  , deviceNumConfigs = 1
+  , deviceNumConfigs = 1 -- XXX should be calculated based on length of [Config]
   , deviceSerialNumberStrIx = Just 0
   , deviceManufacturerStrIx = Just 1
   , deviceProductStrIx = Just 2
@@ -91,12 +91,12 @@ config_descriptor = ConfigDesc
       configValue = 1 -- TODO i shouldnt have to manually enum these. constructors should resolve these for me. or atleast not by index?
 
     , configStrIx = Just 0
-    , configAttribs = fromEnums [SelfPowered, USB1BusPowered] -- XXX check this matches 0xC0
-    , configMaxPower = 50
+    , configAttribs = fromEnums [SelfPowered, USB1BusPowered] -- XXX check this matches 0xC0 XXX i dont like that i have to remember to put USB1BusPowered everywhere. As I understand it, in usb2.0, this legacy 1.0 flag must always beset.
+    , configMaxPower = 50 -- TODO is this mA? will giving more power help longer cable + uncooperative port combinations i was encountering with the teensy? stm32 prly takes a good deal more power to begin with...
     , configInterfaces = []
     , configExtra = empty
     }
--- TODO make this all compilable by ghc as a cabal library, using ifdefs to differentiate ghc/jhc if necessary, then build a test harness around it, first as basic exe then quickcheck etc.
+-- TODO make this all compilable by ghc as a cabal library, using ifdefs to differentiate ghc/jhc if necessary, then build a test harness around it, first as basic exe, then quickcheck etc.
 
 
 --const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
