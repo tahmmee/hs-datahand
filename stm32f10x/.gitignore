@@ -1,2 +1,5 @@
 *.o
 *.a
+hs_main.c
+mini-demo.*
+jhc_custom/rts/src
