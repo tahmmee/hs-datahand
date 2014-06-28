@@ -262,9 +262,9 @@ hs_main.c : hs_src/Main.hs hs_src/*/*.hs hs_src/*/*/*.hs
     -f ffi \
     -p applicative \
     -p bytestring \
-    -p jhc \
     -X RecordWildCards \
 	--tdir=$(JHCRTS_SRC) -C -o $@ $<
+    #-p jhc \
     #-X DeriveFunctor \
     #-X DeriveFoldable \
     #-X DeriveTraversable \

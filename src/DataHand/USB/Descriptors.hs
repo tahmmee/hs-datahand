@@ -1,8 +1,7 @@
 module DataHand.USB.Descriptors where
 import System.USB.Descriptors
-import Data.EnumSet as ES hiding (empty)
-import Jhc.Enum as E
 
+import Data.EnumSet hiding (empty)
 import Data.ByteString (empty)
 
 deviceDescriptor = DeviceDesc {
