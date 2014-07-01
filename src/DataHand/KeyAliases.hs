@@ -53,3 +53,4 @@ down = DownArrow
 pgup = PageUp
 pgdn = PageDown
 ins = Insert
+ps = PrintScreen
