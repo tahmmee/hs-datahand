@@ -77,33 +77,18 @@ qCht = Y
 -- shop mode could be capslock or norm lever while held up
 -- TODO: rune + roshan screen bookmarks
 
-standard = Layout {
-    normal = Layer
---       +----+           +----+           +----+           +----+
-           ab1              ab2              ab3              ab4
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-      ø   sel2  ab4    ø   sel1  ab5    ø   hold  it6    ø   attk  it5   Shift ø    Alt
---  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-           it1              it2              it3              it4         ø    NAS  Ctrl
---       +----+           +----+           +----+           +----+      +----+----+----+
-    ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø
-  , nas = EmptyLayer
-  , function = EmptyLayer
-  , tenk = EmptyLayer
-  }
-
 
 experimental = Layout {
     normal = Layer
 --       +----+           +----+           +----+           +----+
           camU              ab3              ab2              ab1
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     camL sel1 camR    it1 sel2  ab5    it2 hold  ab4   it3  attk  abU    Tab  ø   Ctrl
+     camL sel1 camR    it1 sel2  ab5    it2 hold  ab4   it3  attk  abU    Tab evnt Ctrl
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
           camD              it4              it5              it6        Shift NAS  Alt
 --       +----+           +----+           +----+           +----+      +----+----+----+
 
--- TODO make a key here temporarily toggle back to the regular layout so i can type. Maybe the key that's normally Fn can toggle it.
+-- TODO use a key (on right hand) to temporarily toggle back to the regular layout so i can type. Maybe the key that's normally Fn can toggle it. Or use something globally free like caps+naslock or norm+fn (easy to mispress)
 --                        +----+           +----+           +----+           +----+
                             ø                ø                ø                ø  
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
@@ -121,6 +106,7 @@ experimental = Layout {
           camD              it4              it5              it6        Shift NAS  Alt
 --       +----+           +----+           +----+           +----+      +----+----+----+
     ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø
+    -- TODO add a layer with various macros like deliver, check rune spots, etc.
     -- a layer without all item binds for microing
     -- TODO key for autoattack toggle macro, since microed units may benefit from this, especially post-ability-aa.
   , function = Layer
@@ -132,5 +118,21 @@ experimental = Layout {
           camD             sel3             sel4             sel5        Shift NAS  Alt
 --       +----+           +----+           +----+           +----+      +----+----+----+
     ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø
+  , tenk = EmptyLayer
+  }
+
+-- experimental, above, is better; use that instead
+standard = Layout {
+    normal = Layer
+--       +----+           +----+           +----+           +----+
+           abU              ab3              ab2              ab1
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      ø   sel2  ab5   selC sel1  ab4    ø   hold  it6    ø   attk  it5   Shift ø    Alt
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+           it1              it2              it3              it4         ø    NAS  Ctrl
+--       +----+           +----+           +----+           +----+      +----+----+----+
+    ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø ø
+  , nas = EmptyLayer
+  , function = EmptyLayer
   , tenk = EmptyLayer
   }
