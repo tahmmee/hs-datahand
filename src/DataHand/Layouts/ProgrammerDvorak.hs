@@ -69,11 +69,11 @@ experimental = Layout {
 --   * forwardslash + nas = backslash
     normal = Layer
 --       +----+           +----+           +----+           +----+
-           sqt              com              per              P
+          scol              com              per              P
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
       At   A   dash    qm   O    X     Pipe  E    Y     fslh  U    I      ret caps  Tab
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-          scol              Q                J                K          Norm shft lctl
+           sqt              Q                J                K          Norm shft lctl
 --       +----+           +----+           +----+           +----+      +----+----+----+
 
 --                        +----+           +----+           +----+           +----+
