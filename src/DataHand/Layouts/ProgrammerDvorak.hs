@@ -90,15 +90,15 @@ experimental = Layout {
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      ø    svn Plus    ø   Five  ø      lab thr   rab   bslh One  Nine   ret caps  Tab
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-         til              perc             dol              eq          Norm shft lctl
+         bktk             perc             dol              eq          Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
                            rp              rcb               rb              Bang
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    eigt Zero  Caret  ø    Two  ø      ø   Four  ø      ins  Six   ø  
+    bksp nasl  sp    eigt Zero Caret   ø    Two  ø      ø   Four  ø      ins  Six  ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     Alt  NAS  fn         ast              Hash             Plus             bktk
+     Alt  NAS  fn         ast              Hash             Plus              til
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , function = Layer
 --      +----+           +----+           +----+           +----+
@@ -112,7 +112,7 @@ experimental = Layout {
 --                       +----+           +----+           +----+           +----+
                            up              pgup              ps               ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    left Home rite    F2   End  F4     F6   ø    F8     F10  ø    F12
+    bksp nasl  sp    left Home rite    F2   End  F4     F6   ø    F8     F10  ø    F12 -- FIXME seems like F12 key id bad
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         down             pgdn              ø                ø
 -- +----+----+----+      +----+           +----+           +----+           +----+     
