@@ -32,5 +32,5 @@ main = do
                    , ("normalS", normalS)
                    , ("nas", nas)
                    , ("nasS", nasS)
-                   , ("function", function)
-                   , ("functionS", functionS) ]
+                   , ("fn", function)
+                   , ("fnS", functionS) ]
