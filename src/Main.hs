@@ -15,11 +15,15 @@ join = (concat .) . intersperse
 -- TODO:  create converter for .xml LGS files
 
 main = do
+    -- TODO make tuple list and map across rather than copypasta here
     let dumpRawHeader Layout{..} = putStrLn $ join "\n" [
             "// This header was generated using https://github.com/elitak/hs-datahand"
-          , "const uint16_t PROGMEM normal_keys [] = {" ++ join ", " (dump normal  ) ++ "};"
-          , "const uint16_t PROGMEM    nas_keys [] = {" ++ join ", " (dump nas     ) ++ "};"
-          , "const uint16_t PROGMEM     fn_keys [] = {" ++ join ", " (dump function) ++ "};"
+          , "const uint16_t PROGMEM  normal_keys [] = {" ++ join ", " (dump normal  ) ++ "};"
+          , "const uint16_t PROGMEM normalS_keys [] = {" ++ join ", " (dump normalS ) ++ "};"
+          , "const uint16_t PROGMEM     nas_keys [] = {" ++ join ", " (dump nas     ) ++ "};"
+          , "const uint16_t PROGMEM    nasS_keys [] = {" ++ join ", " (dump nasS    ) ++ "};"
+          , "const uint16_t PROGMEM      fn_keys [] = {" ++ join ", " (dump function) ++ "};"
+          , "const uint16_t PROGMEM     fnS_keys [] = {" ++ join ", " (dump functionS) ++ "};"
             ]
 
     dumpRawHeader experimental

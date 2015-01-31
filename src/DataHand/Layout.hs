@@ -10,9 +10,13 @@ import Data.Foldable
 import DataHand.Keys
 
 data Layout = Layout { normal :: Layer Key
+                     , normalS :: Layer Key -- nulls are just normal+shiftKey, otherwise send the keycode in this layer
                      , nas :: Layer Key
+                     , nasS :: Layer Key
                      , function :: Layer Key
+                     , functionS :: Layer Key
                      , tenk :: Layer Key
+                     , tenkS :: Layer Key
     } deriving (Show, Eq)
 
 data Layer t = EmptyLayer

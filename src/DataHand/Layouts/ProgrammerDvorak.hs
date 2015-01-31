@@ -51,8 +51,9 @@ import DataHand.KeyAliases
 --      that slot. or release a lock key last to cycle the opposite direction.
 -- TODO USB connection to other hand, attach as separate devices?
 -- TODO: NAS col, dqt, etc locations are same as Normal?
---   have pipe here shiftable to \ (not a big deal since nas+/ makes more sense anyway
---   copy, paste, etc macros that are portable
+--   * copy, paste, etc macros that are portable; alt-tab on single key on left-hand side
+--   * gnu screen: ctrl-a, ctrl-a n/p, " etc.
+--   * xmonad bindings
 -- TODO make / shift to \ rather than ? , consider other possibilites
 -- TODO missing fn keys like printscreen,scrolllock, numlock
 -- TODO have winkey be both levers simulaneously pressed
@@ -75,7 +76,7 @@ experimental = Layout {
 --       +----+           +----+           +----+           +----+
           scol              com              per              P
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-      At   A   dash    qm   O    X     Pipe  E    Y     fslh  U    I      ret caps  Tab
+      At   A   dash    dol  O    X     Pipe  E    Y     fslh  U    I      ret caps  Tab
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
            sqt              Q                J                K          Norm shft lctl
 --       +----+           +----+           +----+           +----+      +----+----+----+
@@ -88,22 +89,40 @@ experimental = Layout {
       Alt  NAS  fn          M                W                V                Z  
 --  +----+----+----+      +----+           +----+           +----+           +----+     
 
+  , normalS = Layer
+--       +----+           +----+           +----+           +----+
+           ø                qm              Bang              ø
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      ø    ø    ø     Hash  ø    ø      amp  ø    ø     bslh  ø    ø      ø    ø    ø
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+           ø                ø                ø                ø           ø    ø    ø   
+--       +----+           +----+           +----+           +----+      +----+----+----+
+
+--                        +----+           +----+           +----+           +----+
+                            ø                ø                ø                ø
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      ø    ø    ø      ø    ø    ø      ø    ø    ø      ø    ø    ø      ø    ø    ø
+--  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
+      ø    ø    ø           ø                ø                ø                ø     
+--  +----+----+----+      +----+           +----+           +----+           +----+     
+
   , nas = Layer
 --      +----+           +----+           +----+           +----+
-         amp               lb              lcb               lp
+          ø                lb               lcb              lp
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø    svn Plus    ø   Five  ø      lab thr   rab   bslh One  Nine   ret caps  Tab
+     ø    svn Plus    ø   Five  ø      lab  thr  rab   bslh  One Nine    ret caps  Tab
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
          bktk             perc             dol              eq          Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
-                           rp              rcb               rb              Bang
+                           rp              rcb               rb               ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
     bksp nasl  sp    eigt Zero Caret   ø    Two  ø      ø   Four  ø      ins  Six  ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         ast              Hash             Plus              til
 -- +----+----+----+      +----+           +----+           +----+           +----+     
+  , nasS = EmptyLayer
   , function = Layer
 --      +----+           +----+           +----+           +----+
           ø                ø               pgup              up
@@ -120,15 +139,21 @@ experimental = Layout {
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         down             pgdn              ø                ø
 -- +----+----+----+      +----+           +----+           +----+           +----+     
+  , functionS = EmptyLayer
   , tenk = EmptyLayer
+  , tenkS = EmptyLayer
   }
 
 -- TODO: dvorak in cyrillic
 dvorak_cyrillic = Layout {
     normal = EmptyLayer
+  , normalS = EmptyLayer
   , nas = EmptyLayer
+  , nasS = EmptyLayer
   , function = EmptyLayer
+  , functionS = EmptyLayer
   , tenk = EmptyLayer
+  , tenkS = EmptyLayer
   }
 
 -- XXX incomplete, probably should be abandoned
@@ -150,6 +175,7 @@ strict = Layout {
       Alt  NAS  fn          M                W                V                Z  
 --  +----+----+----+      +----+           +----+           +----+           +----+     
 
+  , normalS = EmptyLayer
   , nas = Layer
 --      +----+           +----+           +----+           +----+
          perc              svn             Five              thr
@@ -166,7 +192,10 @@ strict = Layout {
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn          ø                ø                ø                ø  
 -- +----+----+----+      +----+           +----+           +----+           +----+     
+  , nasS = EmptyLayer
   , function = EmptyLayer
+  , functionS = EmptyLayer
   , tenk = EmptyLayer
+  , tenkS = EmptyLayer
     }
 
