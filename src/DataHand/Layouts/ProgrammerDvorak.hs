@@ -58,6 +58,10 @@ import DataHand.KeyAliases
 -- TODO have winkey be both levers simulaneously pressed
 -- TODO C-a a,n,p,[,] macros for screen
 -- TODO give some thought to the difficulty i have typing ("1");
+-- TODO FEATURE consider chording support for games. this is probably better/faster than hard to reach directional buttons. research what timing thresholds and behavior are most usable with chording. There is an inherent, unavoidable collision when mashing 2 buttons. Do I send both original keypresses anyway?(requires keymap accomodations to not send superfluous commands) or do i wait for a chord 50ms or so? (then all regular keys are unresponsive!) a middle ground would be to have some keys "chordable" meaning they would always exhibit the delay, and have others remain fully responsive.
+-- times when superflous keys would be okay:
+--   * modal menus in rtses, so long as underlying keys dont share binds
+--   * not many others, lol. this method seems pretty undesirable.
 
 experimental = Layout {
 -- high prio symbols: ,. :; '" - /? | @ # `
@@ -112,7 +116,7 @@ experimental = Layout {
 --                       +----+           +----+           +----+           +----+
                            up              pgup              ps               ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-    bksp nasl  sp    left Home rite    F2   End  F4     F6   ø    F8     F10  ø    F12 -- FIXME seems like F12 key id bad
+    bksp nasl  sp    left Home rite    F2   End  F4     F6   ø    F8     F10  ø    F12
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
      Alt  NAS  fn         down             pgdn              ø                ø
 -- +----+----+----+      +----+           +----+           +----+           +----+     

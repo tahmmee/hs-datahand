@@ -167,67 +167,20 @@ data Key = NoEvent
          | Cancel
          | Clear
          | Prior
-         -- HACK FIXME the next set of symbols are actually shifted versions of the
-         -- keys (i.e. + 0x80). I don't know if this is the correct way to
-         -- represent these keys. I think maybe there's another register for
-         -- metakeystate that I need to be dealing with. I'm not, for now, and
-         -- these produce the same result anyway and can be shifted back (i
-         -- think).
-         | Bang
-         | At
+         | Return2 -- XXX are both valid?
+         | Separator -- this doesn't print anything on US layout, dunno bout others; use Pipe (shifted BackSlash)
          -- 0xA0
-         | Hash
-         | Dollar
-         | Percent
-         | Caret
-         | Ampersand
-         | Asterisk
-         | LeftParenthesis
-         | RightParenthesis
-         | ShiftReturn
-         | ShiftEscape
-         | ShiftBackspace
-         | ShiftTab
-         | ShiftSpace
-         | ShiftMinus
-         | Plus
-         | LeftCurlyBracket
-         -- 0xB0
-         | RightCurlyBracket
-         | Pipe
-         | ShiftNumber -- what is shift+"number"???
-         | Colon
-         | DoubleQuote
-         | Tilde
-         | LeftAngleBracket
-         | RightAngleBracket
-         | QuestionMark
-         -- end HACKed keycodes
-         | DummyB9
-         | DummyBA
-         | DummyBB
-         | DummyBC
-         | DummyBD
-         | DummyBE
-         | DummyBF
-         -- 0xC0
-         | DummyC0
-         | DummyC1
-         | DummyC2
-         | DummyC3
-         | DummyC4
-         | DummyC5
-         | DummyC6
-         | DummyC7
-         | DummyC8
-         | DummyC9
-         | DummyCA
-         | DummyCB
-         | DummyCC
-         | DummyCD
-         | DummyCE
-         | DummyCF
-         -- 0xD0
+         | Out
+         | Oper
+         | ClearAgain
+         | CrSelProps
+         | ExSel
+         | DummyA5 | DummyA6 | DummyA7 | DummyA8
+         | DummyA9 | DummyAA | DummyAB | DummyAC | DummyAD | DummyAE | DummyAF
+         | DummyB0 | DummyB1 | DummyB2 | DummyB3 | DummyB4 | DummyB5 | DummyB6 | DummyB7
+         | DummyB8 | DummyB9 | DummyBA | DummyBB | DummyBC | DummyBD | DummyBE | DummyBF
+         | DummyC0 | DummyC1 | DummyC2 | DummyC3 | DummyC4 | DummyC5 | DummyC6 | DummyC7
+         | DummyC8 | DummyC9 | DummyCA | DummyCB | DummyCC | DummyCD | DummyCE | DummyCF
          | DummyD0 | DummyD1 | DummyD2 | DummyD3 | DummyD4 | DummyD5 | DummyD6 | DummyD7
          | DummyD8 | DummyD9 | DummyDA | DummyDB | DummyDC | DummyDD | DummyDE | DummyDF
          -- 0xE0
@@ -249,4 +202,44 @@ data Key = NoEvent
          | Shift
          | Control
          | Alt
+         | DummyF7
+         | DummyF8 | DummyF9 | DummyFA | DummyFB | DummyFC | DummyFD | DummyFE | DummyFF
+         | Dummy100 | Dummy101 | Dummy102 | Dummy103 | Dummy104 | Dummy105 | Dummy106 | Dummy107
+         | Dummy108 | Dummy109 | Dummy10A | Dummy10B | Dummy10C | Dummy10D | Dummy10E | Dummy10F
+         | Dummy110 | Dummy111 | Dummy112 | Dummy113 | Dummy114 | Dummy115 | Dummy116 | Dummy117
+         | Dummy118 | Dummy119 | Dummy11A | Dummy11B | Dummy11C | Dummy11D
+         | Bang
+         | At
+         -- 0x120
+         | Hash
+         | Dollar
+         | Percent
+         | Caret
+         | Ampersand
+         | Asterisk
+         | LeftParenthesis
+         | RightParenthesis
+         | ShiftReturn -- FIXME: i dont think these keys have inherent shift states like alphanum
+         | ShiftEscape
+         | ShiftBackspace
+         | ShiftTab
+         | ShiftSpace
+         | ShiftMinus
+         | Plus
+         | LeftCurlyBracket
+         -- 0x130
+         | RightCurlyBracket
+         | Pipe
+         | ShiftNumber -- what is shift+"number"???
+         | Colon
+         | DoubleQuote
+         | Tilde
+         | LeftAngleBracket
+         | RightAngleBracket
+         | QuestionMark
+         | Dummy139 | Dummy13A | Dummy13B | Dummy13C | Dummy13D | Dummy13E | Dummy13F
+         | Dummy140 | Dummy141 | Dummy142 | Dummy143 | Dummy144 | Dummy145 | Dummy146 | Dummy147
+         | Dummy148 | Dummy149 | Dummy14A | Dummy14B | Dummy14C | Dummy14D | Dummy14E | Dummy14F
+         | Dummy150 | Dummy151 | Dummy152 | Dummy153 | Dummy154 | Dummy155 | Dummy156 | Dummy157
+         | Dummy158 | Dummy159 | Dummy15A | Dummy15B | Dummy15C | Dummy15D | Dummy15E | Dummy15F
          deriving (Show, Eq, Ord, Bounded, Enum)
