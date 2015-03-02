@@ -54,7 +54,6 @@ import DataHand.KeyAliases
 --   * copy, paste, etc macros that are portable; alt-tab on single key on left-hand side
 --   * gnu screen: ctrl-a, ctrl-a n/p, " etc.
 --   * xmonad bindings
--- TODO make / shift to \ rather than ? , consider other possibilites
 -- TODO missing fn keys like printscreen,scrolllock, numlock
 -- TODO have winkey be both levers simulaneously pressed
 -- TODO C-a a,n,p,[,] macros for screen
@@ -84,7 +83,7 @@ experimental = Layout {
 --                        +----+           +----+           +----+           +----+
                             G                C                R                L
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     bksp nasl  sp     D    H    esc    F    T   lwin    B    N   lapp    del  S    ø
+     bksp nasl  sp     D    H    esc    F    T    ø      B    N   lapp    del  S   lwin
 --  +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
       Alt  NAS  fn          M                W                V                Z  
 --  +----+----+----+      +----+           +----+           +----+           +----+     
@@ -110,9 +109,9 @@ experimental = Layout {
 --      +----+           +----+           +----+           +----+
           ø                lb               lcb              lp
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     ø    svn Plus    ø   Five  ø      lab  thr  rab   bslh  One Nine    ret caps  Tab
+     ø    svn Plus    ø   Five  ø      lab  thr  rab    til  One Nine    ret caps  Tab
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-         bktk             perc             dol              eq          Norm shft lctl
+         bktk             perc              ø                eq         Norm shft lctl
 --      +----+           +----+           +----+           +----+      +----+----+----+
 
 --                       +----+           +----+           +----+           +----+
@@ -120,7 +119,7 @@ experimental = Layout {
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
     bksp nasl  sp    eigt Zero Caret   ø    Two  ø      ø   Four  ø      ins  Six  ø
 -- +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+ +----+----+----+
-     Alt  NAS  fn          ast             Hash              ø                til
+     Alt  NAS  fn          ast              ø                ø                til
 -- +----+----+----+      +----+           +----+           +----+           +----+     
   , nasS = EmptyLayer
   , function = Layer
