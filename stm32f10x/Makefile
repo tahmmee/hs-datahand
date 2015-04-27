@@ -202,6 +202,7 @@ all: gccversion build sizeafter
 build: stdlib jhcrts elf hex eep lss sym
 
 elf: $(TARGET).elf
+bin: $(TARGET).bin
 hex: $(TARGET).hex
 lss: $(TARGET).lss 
 sym: $(TARGET).sym
@@ -230,15 +231,14 @@ gccversion :
 	$(CC) --version
 
 
-# Program the device.  
-flash:
-	$(WRITER) $(TARGET)
-
 
 
 # Create final output files (.hex, .eep) from ELF output file.
 %.hex: %.elf
 	$(OBJCOPY) -O $(FORMAT) $< $@
+
+%.bin: %.elf
+	$(OBJCOPY) -O binary $< $@
 
 
 # Create extended listing file from ELF output file.
@@ -256,6 +256,9 @@ flash:
 .PRECIOUS : $(OBJ)
 %.elf : $(OBJ)
 	$(LD) $(STARTUP) $(OBJ) -o $@ $(LDFLAGS) 
+
+hs_src/Main.hs: hs_src/Main.hsc
+	hsc2hs -I. $(patsubst %,-I%,$(EXTRAINCDIRS)) hs_src/Main.hsc
 
 hs_main.c : hs_src/Main.hs hs_src/*/*.hs hs_src/*/*/*.hs
 	ajhc -i hs_src \
@@ -304,12 +307,12 @@ hs_main.c : hs_src/Main.hs hs_src/*/*.hs hs_src/*/*/*.hs
 
 
 
-write2stbeemini: all
-	$(OBJCOPY) -O binary $(TARGET).elf $(TARGET).bin
-	sync
-	sync
+write2stbeemini: $(TARGET).bin
 	sync
 	sudo dfu-util -s 0x08003000 -D $(TARGET).bin
+
+flash: $(TARGET).bin
+	DISPLAY=:1 qstlink2 -cwV ./$(TARGET).bin
 
 # Target: clean project.
 clean:
