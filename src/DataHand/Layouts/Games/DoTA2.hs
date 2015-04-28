@@ -109,6 +109,7 @@ experimental = Layout {
     -- TODO add a layer with various macros like deliver, check rune spots, etc.
     -- a layer without all item binds for microing
     -- TODO key for autoattack toggle macro, since microed units may benefit from this, especially post-ability-aa.
+    -- TODO add layer for chatwheel direct binds (probably last as that will take time to memorize)
   , function = Layer
 --       +----+           +----+           +----+           +----+
           camU              ab3              ab2              ab1
