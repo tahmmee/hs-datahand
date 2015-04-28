@@ -192,10 +192,6 @@ ALL_CFLAGS = -mcpu=$(MCU) -I. $(CFLAGS) $(GENDEPFLAGS)
 #ALL_ASFLAGS = -mcpu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 ALL_ASFLAGS = -mcpu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 
-
-
-
-
 # Default target.
 all: gccversion build sizeafter
 
@@ -206,8 +202,6 @@ bin: $(TARGET).bin
 hex: $(TARGET).hex
 lss: $(TARGET).lss 
 sym: $(TARGET).sym
-
-
 
 stdlib:	lib
 	$(MAKE) -C lib
